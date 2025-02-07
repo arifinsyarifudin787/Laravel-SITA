@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProposalsTable extends Migration
+class CreatePembimbingTASTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,15 @@ class CreateProposalsTable extends Migration
      */
     public function up()
     {
-        Schema::create('proposals', function (Blueprint $table) {
+        Schema::create('pembimbing_t_a_s', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('mhs_id')
-                  ->constrained()
-                  ->cascadeOnDelete();
             $table->foreignId('dosen_id')
-                  ->constrained()
-                  ->nullOnDelete();
+                  ->constrained('users')
+                  ->cascadeOnDelete();
+            $table->enum('peran', ['pembimbing_1', 'pembimbing_2']);
+            $table->foreignId('mhs_id')
+                  ->constrained('users')
+                  ->cascadeOnDelete();
             $table->timestamps();
         });
     }
@@ -32,6 +33,6 @@ class CreateProposalsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('proposals');
+        Schema::dropIfExists('pembimbing_t_a_s');
     }
 }

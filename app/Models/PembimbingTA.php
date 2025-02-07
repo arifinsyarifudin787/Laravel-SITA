@@ -5,13 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Proposal extends Model
+class PembimbingTA extends Model
 {
     use HasFactory;
 
     protected $fillable = [
+        'dosen_id',
         'mhs_id',
-        'dosen_id'
+        'peran'
     ];
 
     public function mahasiswa()

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTugasAkhirsTable extends Migration
+class CreateBimbingansTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ class CreateTugasAkhirsTable extends Migration
      */
     public function up()
     {
-        Schema::create('tugas_akhirs', function (Blueprint $table) {
+        Schema::create('bimbingans', function (Blueprint $table) {
             $table->id();
+            $table->date('tanggal_bimbingan');
             $table->foreignId('mhs_id')
                   ->constrained('users')
                   ->cascadeOnDelete();
-            $table->text('judul');
+            $table->string('bab');
             $table->enum('status', ['diajukan', 'disetujui', 'selesai']);
             $table->timestamps();
         });
@@ -31,6 +32,6 @@ class CreateTugasAkhirsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tugas_akhirs');
+        Schema::dropIfExists('bimbingans');
     }
 }

@@ -5,13 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TugasAkhir extends Model
+class Bimbingan extends Model
 {
     use HasFactory;
 
     protected $fillable = [
+        'tanggal_bimbingan',
         'mhs_id',
-        'judul',
+        'bab',
         'status'
     ];
 
@@ -22,6 +23,6 @@ class TugasAkhir extends Model
 
     public function persetujuan()
     {
-        return $this->hasMany(PersetujuanTA::class, 'tugas_akhir_id');
+        return $this->hasMany(PersetujuanBimbingan::class, 'bimbingan_id');
     }
 }

@@ -40,26 +40,36 @@ class User extends Authenticatable
      * @var array<string, string>
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
     ];
 
-    public function proposals()
-    {
-        return $this->hasMany(Proposal::class, 'mhs_id');
-    }
-
-    public function tugas_akhir()
+    public function tugasAkhir()
     {
         return $this->hasOne(TugasAkhir::class, 'mhs_id');
     }
 
-    public function bimbingan_proposal()
+    public function pembimbing()
     {
-        return $this->hasMany(Proposal::class, 'dosen_id');
+        return $this->hasMany(PembimbingTA::class, 'mhs_id');
     }
 
-    public function bimbingan_tugas_akhir()
+    public function bimbingan()
     {
-        return $this->hasMany(TugasAkhir::class, 'dosen_id');
+        return $this->hasMany(Bimbingan::class, 'mhs_id');
+    }
+
+    public function mahasiswaBimbingan()
+    {
+        return $this->hasMany(PembimbingTA::class, 'dosen_id');
+    }
+
+    public function persetujuanTA()
+    {
+        return $this->hasMany(PersetujuanTA::class, 'dosen_id');
+    }
+
+    public function persetujuanBimbingan()
+    {
+        return $this->hasMany(PersetujuanBimbingan::class, 'dosen_id');
     }
 }
