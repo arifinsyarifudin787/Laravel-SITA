@@ -25,8 +25,7 @@ class AuthController extends Controller
     public function index()
     {
     	return view('login.index', [
-	        'title' => 'Masuk',
-	        'nav_type' => 2
+	        'title' => 'Masuk'
 	    ]);
     }
 
@@ -53,6 +52,6 @@ class AuthController extends Controller
     	$request->session()->invalidate();
     	$request->session()->regenerateToken();
 
-    	return redirect('/login');
+    	return redirect('login');
     }
 }

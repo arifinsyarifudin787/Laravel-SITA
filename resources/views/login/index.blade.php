@@ -1,13 +1,6 @@
-<!-- resources/views/auth/login.blade.php -->
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="flex items-center justify-center h-screen bg-gray-100">
+@extends("layouts.main")
+
+@section("container")
     <div class="w-full max-w-md p-6 bg-white rounded-lg shadow-md">
         <h2 class="mb-4 text-2xl font-bold text-center">Login</h2>
         @if(session()->has('loginError'))
@@ -26,5 +19,4 @@
             <button type="submit" class="w-full p-2 text-white bg-blue-600 rounded hover:bg-blue-700">Login</button>
         </form>
     </div>
-</body>
-</html>
+@endsection

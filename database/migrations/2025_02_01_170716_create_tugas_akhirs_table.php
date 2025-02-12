@@ -15,9 +15,7 @@ class CreateTugasAkhirsTable extends Migration
     {
         Schema::create('tugas_akhirs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('mhs_id')
-                  ->constrained('users')
-                  ->cascadeOnDelete();
+            $table->string('nim');
             $table->text('judul');
             $table->enum('status', ['diajukan', 'disetujui', 'selesai']);
             $table->timestamps();

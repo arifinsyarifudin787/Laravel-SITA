@@ -45,7 +45,7 @@ class User extends Authenticatable
 
     public function tugasAkhir()
     {
-        return $this->hasOne(TugasAkhir::class, 'mhs_id');
+        return $this->hasOne(TugasAkhir::class, 'nim', 'username');
     }
 
     public function pembimbing()

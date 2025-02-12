@@ -64,19 +64,19 @@ class DatabaseSeeder extends Seeder
         ]);
 
         TugasAkhir::create([
-            'mhs_id' => User::where('username', '1217050021')->first()->id,
+            'nim' => '1217050021',
             'judul' => 'Penerapan Machine Learning dalam Prediksi Harga Saham',
             'status' => 'diajukan',
         ]);
         
         TugasAkhir::create([
-            'mhs_id' => User::where('username', '1217050031')->first()->id,
+            'nim' => '1217050031',
             'judul' => 'Analisis Keamanan Jaringan Menggunakan IDS',
             'status' => 'diajukan',
         ]);
         
         TugasAkhir::create([
-            'mhs_id' => User::where('username', '1217050037')->first()->id,
+            'nim' => '1217050037',
             'judul' => 'Implementasi Blockchain untuk Sistem Keuangan',
             'status' => 'diajukan',
         ]);

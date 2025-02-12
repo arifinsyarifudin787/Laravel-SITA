@@ -5,10 +5,15 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class MahasiswaController extends Controller
+class DosenController extends Controller
 {
     public function index()
     {
+    }
+
+    public function show()
+    {
+
     }
 
     public function create()
@@ -16,12 +21,7 @@ class MahasiswaController extends Controller
 
     }
 
-    public function store(Request $request)
-    {
-
-    }
-
-    public function destroy()
+    public function store()
     {
 
     }

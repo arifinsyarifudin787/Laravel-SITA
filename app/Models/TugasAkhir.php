@@ -10,14 +10,14 @@ class TugasAkhir extends Model
     use HasFactory;
 
     protected $fillable = [
-        'mhs_id',
+        'nim',
         'judul',
         'status'
     ];
 
     public function mahasiswa()
     {
-        return $this->belongsTo(User::class, 'mhs_id');
+        return $this->belongsTo(User::class, 'nim', 'username');
     }
 
     public function persetujuan()
