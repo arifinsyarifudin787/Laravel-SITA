@@ -31,28 +31,34 @@ Route::middleware('auth')->group(function () {
         return redirect()->route('dashboard');
     });
 
-    Route::get('/dashboard')->middleware(['redirect.dashboard'])->name('dashboard');
+    Route::get('/dashboard', function () {
+        $user = auth()->user();
+
+        return match ($user->role) {
+            'mahasiswa' => app(MahasiswaController::class)->index(),
+            'dosen' => app(DosenController::class)->index(),
+            'admin' => app(AdminController::class)->index(),
+            default => abort(403),
+        };
+    })->name('dashboard');
     
     Route::middleware(['role:admin'])->group(function () {
-        Route::get('/dashboard1', [AdminController::class, 'index'])->name('dashboard.admin');
-        Route::get('/mahasiswa/{id}', [AdminController::class, 'show']);
+        Route::get('/tugas-akhir/{id}', [AdminController::class, 'show']);
         Route::get('/tugas-akhir/tambah', [AdminController::class, 'create']);
         Route::post('/tugas-akhir', [AdminController::class, 'store']);
         Route::put('/tugas-akhir/{id}', [AdminController::class, 'update']);
     });
     
     Route::middleware(['role:mahasiswa'])->group(function () {
-        Route::get('/dashboard2', [MahasiswaController::class, 'index'])->name('dashboard.mahasiswa');
         Route::get('/bimbingan/tambah', [MahasiswaController::class, 'create']);
         Route::post('/bimbingan', [MahasiswaController::class, 'store']);
         Route::delete('/bimbingan/{id}', [MahasiswaController::class, 'destroy']);
     });
     
     Route::middleware(['role:dosen'])->group(function () {
-        Route::get('/dashboard3', [DosenController::class, 'index'])->name('dashboard.dosen');
         Route::get('/mahasiswa/{id}', [DosenController::class, 'show']);
-        Route::post('/bimbingan', [DosenController::class, 'store']);
-        Route::post('/tugas-akhir', [DosenController::class, 'store']);
+        Route::post('/bimbingan/persetujuan', [DosenController::class, 'store']);
+        Route::post('/tugas-akhir/persetujuan', [DosenController::class, 'store']);
     });
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

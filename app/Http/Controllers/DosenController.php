@@ -9,16 +9,16 @@ class DosenController extends Controller
 {
     public function index()
     {
+        return view('dosen.index', [
+            'title' => 'Dashboard',
+        ]);
     }
 
     public function show()
     {
-
-    }
-
-    public function create()
-    {
-
+        return view('dosen.detail', [
+            'title' => 'Bimbingan Mahasiswa',
+        ]);
     }
 
     public function store()

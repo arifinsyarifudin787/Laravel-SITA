@@ -20,7 +20,7 @@ class CreateBimbingansTable extends Migration
                   ->constrained('users')
                   ->cascadeOnDelete();
             $table->string('bab');
-            $table->enum('status', ['diajukan', 'disetujui', 'selesai']);
+            $table->enum('status', ['diajukan', 'disetujui', 'ditolak']);
             $table->timestamps();
         });
     }

@@ -110,7 +110,7 @@ class DatabaseSeeder extends Seeder
             Bimbingan::create([
                 'mhs_id' => $mahasiswa->id,
                 'tanggal_bimbingan' => now(),
-                'bab' => 'I',
+                'bab' => 'II',
                 'status' => 'diajukan',
             ]);
         }
@@ -119,13 +119,13 @@ class DatabaseSeeder extends Seeder
             PersetujuanBimbingan::create([
                 'bimbingan_id' => $bimbingan->id,
                 'dosen_id' => $pembimbing1,
-                'status' => ($bimbingan->bab) == 'I' ? 'disetujui': 'diajukan',
+                'status' => ($bimbingan->bab) == 'I' ? 'disetujui': 'ditolak',
             ]);
         
             PersetujuanBimbingan::create([
                 'bimbingan_id' => $bimbingan->id,
                 'dosen_id' => $pembimbing2,
-                'status' => ($bimbingan->bab) == 'I' ? 'disetujui': 'diajukan',
+                'status' => ($bimbingan->bab) == 'I' ? 'disetujui': 'ditolak',
             ]);
         }
 

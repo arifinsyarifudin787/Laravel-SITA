@@ -21,7 +21,7 @@ class Bimbingan extends Model
         return $this->belongsTo(User::class, 'mhs_id');
     }
 
-    public function persetujuan()
+    public function persetujuans()
     {
         return $this->hasMany(PersetujuanBimbingan::class, 'bimbingan_id');
     }
