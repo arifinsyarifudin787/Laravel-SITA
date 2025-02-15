@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\TugasAkhir;
+use App\Models\PembimbingTA;
 
 class TugasAkhirObserver
 {
@@ -11,7 +12,17 @@ class TugasAkhirObserver
      */
     public function created(TugasAkhir $tugasAkhir): void
     {
-        //
+        PembimbingTA::create([
+            'dosen_id' => request()->dosen_1, 
+            'mhs_id' => $tugasAkhir->mhs_id,
+            'peran' => 'Pembimbing 1'
+        ]);
+
+        PembimbingTA::create([
+            'dosen_id' => request()->dosen_2, 
+            'mhs_id' => $tugasAkhir->mhs_id,
+            'peran' => 'Pembimbing 2'
+        ]);
     }
 
     /**
