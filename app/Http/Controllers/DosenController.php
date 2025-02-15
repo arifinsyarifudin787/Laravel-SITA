@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Models\PersetujuanBimbingan;
 use App\Models\PersetujuanTA;
 use App\Models\User;
-use App\Models\Bimbingan;
 
 class DosenController extends Controller
 {
@@ -15,7 +14,7 @@ class DosenController extends Controller
     {   
         return view('dosen.index', [
             'title' => 'Dashboard',
-            'mahasiswas' => auth()->user()->mahasiswaBimbingan()->get(),
+            'mahasiswas' => auth()->user()->mahasiswaBimbingans,
         ]);
     }
 

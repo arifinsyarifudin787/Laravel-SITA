@@ -43,20 +43,20 @@ Route::middleware('auth')->group(function () {
     })->name('dashboard');
     
     Route::middleware(['role:admin'])->group(function () {
-        Route::get('/tugas-akhir/{id}', [AdminController::class, 'show']);
+        Route::get('/tugas-akhir/{ta:id}', [AdminController::class, 'show']);
         Route::get('/tugas-akhir/tambah', [AdminController::class, 'create']);
         Route::post('/tugas-akhir', [AdminController::class, 'store']);
-        Route::put('/tugas-akhir/{id}', [AdminController::class, 'update']);
+        Route::put('/tugas-akhir/{ta:id}', [AdminController::class, 'update']);
     });
     
     Route::middleware(['role:mahasiswa'])->group(function () {
         Route::get('/bimbingan/tambah', [MahasiswaController::class, 'create']);
         Route::post('/bimbingan', [MahasiswaController::class, 'store']);
-        Route::delete('/bimbingan/{id}', [MahasiswaController::class, 'destroy']);
+        Route::delete('/bimbingan/{b:id}', [MahasiswaController::class, 'destroy']);
     });
     
     Route::middleware(['role:dosen'])->group(function () {
-        Route::get('/mahasiswa/{id}', [DosenController::class, 'show']);
+        Route::get('/mahasiswa/{mhs:id}', [DosenController::class, 'show']);
         Route::post('/bimbingan/persetujuan', [DosenController::class, 'store']);
         Route::post('/tugas-akhir/persetujuan', [DosenController::class, 'store']);
     });

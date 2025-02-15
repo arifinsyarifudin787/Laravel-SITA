@@ -3,7 +3,7 @@
 @section('container')
     <div class="flex flex-col items-center justify-center h-screen">
         <h2 class="mb-4 text-3xl font-bold">Bimbingan Mahasiswa</h2>
-        <p>{{ $mahasiswa->name }} {{ $mahasiswa->bimbingans->count() }}</p>
+        <p>{{ $mahasiswa->name }}</p>
 
         @forelse ($mahasiswa->bimbingans as $bimbingan)
             <p> 
