@@ -48,27 +48,34 @@ class User extends Authenticatable
         return $this->hasOne(TugasAkhir::class, 'nim', 'username');
     }
 
-    public function pembimbing()
+    public function pembimbings()
     {
         return $this->hasMany(PembimbingTA::class, 'mhs_id');
     }
 
-    public function bimbingan()
+    public function bimbingans()
     {
         return $this->hasMany(Bimbingan::class, 'mhs_id');
     }
 
-    public function mahasiswaBimbingan()
+    public function mahasiswaBimbingans()
     {
-        return $this->hasMany(PembimbingTA::class, 'dosen_id');
+        return $this->hasManyThrough(
+            User::class,
+            PembimbingTA::class,
+            'dosen_id',
+            'id',
+            'id',
+            'mhs_id'
+        );
     }
 
-    public function persetujuanTA()
+    public function persetujuanTAs()
     {
         return $this->hasMany(PersetujuanTA::class, 'dosen_id');
     }
 
-    public function persetujuanBimbingan()
+    public function persetujuanBimbingans()
     {
         return $this->hasMany(PersetujuanBimbingan::class, 'dosen_id');
     }

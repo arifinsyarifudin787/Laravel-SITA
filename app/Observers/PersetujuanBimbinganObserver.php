@@ -33,7 +33,7 @@ class PersetujuanBimbinganObserver
     /**
      * Handle the PersetujuanBimbingan "updated" event.
      */
-    public function updated(PersetujuanBimbingan $persetujuanBimbingan): void
+    public function updated(PersetujuanBimbingan $persetujuan): void
     {
         //
     }
@@ -41,7 +41,7 @@ class PersetujuanBimbinganObserver
     /**
      * Handle the PersetujuanBimbingan "deleted" event.
      */
-    public function deleted(PersetujuanBimbingan $persetujuanBimbingan): void
+    public function deleted(PersetujuanBimbingan $persetujuan): void
     {
         //
     }
@@ -49,7 +49,7 @@ class PersetujuanBimbinganObserver
     /**
      * Handle the PersetujuanBimbingan "restored" event.
      */
-    public function restored(PersetujuanBimbingan $persetujuanBimbingan): void
+    public function restored(PersetujuanBimbingan $persetujuan): void
     {
         //
     }
@@ -57,7 +57,7 @@ class PersetujuanBimbinganObserver
     /**
      * Handle the PersetujuanBimbingan "force deleted" event.
      */
-    public function forceDeleted(PersetujuanBimbingan $persetujuanBimbingan): void
+    public function forceDeleted(PersetujuanBimbingan $persetujuan): void
     {
         //
     }

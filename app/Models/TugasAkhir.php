@@ -20,7 +20,7 @@ class TugasAkhir extends Model
         return $this->belongsTo(User::class, 'nim', 'username');
     }
 
-    public function persetujuan()
+    public function persetujuans()
     {
         return $this->hasMany(PersetujuanTA::class, 'tugas_akhir_id');
     }
