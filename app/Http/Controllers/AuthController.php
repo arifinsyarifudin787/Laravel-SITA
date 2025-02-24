@@ -48,7 +48,8 @@ class AuthController extends Controller
                     [
                         'name' => $data['first_name'],
                         'role' => $data['status_login'],
-                        'username' => $data['username']
+                        'username' => $data['username'],
+                        'password' => 'yyysys7'
                     ]
                 );
 

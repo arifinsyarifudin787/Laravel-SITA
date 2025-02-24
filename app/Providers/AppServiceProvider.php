@@ -27,6 +27,6 @@ class AppServiceProvider extends ServiceProvider
     {
         PersetujuanBimbingan::observe(PersetujuanBimbinganObserver::class);
         PersetujuanTA::observe(PersetujuanTugasAkhirObserver::class);
-        //TugasAkhir::observe(TugasAkhirObserver::class);
+        TugasAkhir::observe(TugasAkhirObserver::class);
     }
 }

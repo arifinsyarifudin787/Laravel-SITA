@@ -38,12 +38,18 @@ class AdminController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'mhs_id' => ['required'],
+            'nim' => ['required'],
             'judul' => ['required'],
-            'dosen_1' => ['required'],
-            'dosen_2' => ['required'],
+            'dosen_p1' => ['required'],
+            'dosen_p2' => ['required'],
         ]);
+        
+        $existingTugasAkhir = TugasAkhir::where('nim', $validatedData['nim'])->first();
     
+        if ($existingTugasAkhir) {
+            return back()->with('error', 'Tugas Akhir dengan NIM ini sudah ada.');
+        }
+
         $validatedData['status'] = 'diajukan';
     
         TugasAkhir::create($validatedData);

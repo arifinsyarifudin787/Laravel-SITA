@@ -43,9 +43,9 @@ Route::middleware('auth')->group(function () {
     })->name('dashboard');
     
     Route::middleware(['role:admin'])->group(function () {
-        Route::get('/tugas-akhir/{ta:id}', [AdminController::class, 'show']);
         Route::get('/tugas-akhir/tambah', [AdminController::class, 'create']);
-        Route::post('/tugas-akhir', [AdminController::class, 'store']);
+        Route::get('/tugas-akhir/{ta:id}', [AdminController::class, 'show']);
+        Route::post('/tugas-akhir', [AdminController::class, 'store'])->name('ta.store');
         Route::put('/tugas-akhir/{ta:id}', [AdminController::class, 'update']);
     });
     

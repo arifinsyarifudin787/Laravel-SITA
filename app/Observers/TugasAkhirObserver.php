@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Models\TugasAkhir;
 use App\Models\PembimbingTA;
+use App\Models\User;
 
 class TugasAkhirObserver
 {
@@ -12,16 +13,26 @@ class TugasAkhirObserver
      */
     public function created(TugasAkhir $tugasAkhir): void
     {
+        $mhs = User::updateOrCreate(
+            ['username' => $tugasAkhir->nim],
+            [
+                'name' => request()->nama,
+                'role' => 'mahasiswa',
+                'username' => $tugasAkhir->nim,
+                'password' => 'yyysys7'
+            ]
+        );
+
         PembimbingTA::create([
-            'dosen_id' => request()->dosen_1, 
-            'mhs_id' => $tugasAkhir->mhs_id,
-            'peran' => 'Pembimbing 1'
+            'dosen_id' => request()->dosen_p1, 
+            'mhs_id' => $mhs->id,
+            'peran' => 'pembimbing_1'
         ]);
 
         PembimbingTA::create([
-            'dosen_id' => request()->dosen_2, 
-            'mhs_id' => $tugasAkhir->mhs_id,
-            'peran' => 'Pembimbing 2'
+            'dosen_id' => request()->dosen_p2, 
+            'mhs_id' => $mhs->id,
+            'peran' => 'pembimbing_2'
         ]);
     }
 
