@@ -5,6 +5,7 @@ namespace App\Observers;
 use App\Models\TugasAkhir;
 use App\Models\PembimbingTA;
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
 
 class TugasAkhirObserver
 {
@@ -19,18 +20,41 @@ class TugasAkhirObserver
                 'name' => request()->nama,
                 'role' => 'mahasiswa',
                 'username' => $tugasAkhir->nim,
-                'password' => 'yyysys7'
+                'password' => ''
+            ]
+        );
+
+        $dosen_p1_data = json_decode(request()->dosen_p1, true);
+        $dosen_p2_data = json_decode(request()->dosen_p2, true);
+
+        $dosen_p1 = User::updateOrCreate(
+            ['username' => $dosen_p1_data['username']],
+            [
+                'name' => $dosen_p1_data['name'],
+                'role' => 'dosen',
+                'username' => $dosen_p1_data['username'],
+                'password' => ''
+            ]
+        );
+
+        $dosen_p2 = User::updateOrCreate(
+            ['username' => $dosen_p2_data['username']],
+            [
+                'name' => $dosen_p2_data['name'],
+                'role' => 'dosen',
+                'username' => $dosen_p2_data['username'],
+                'password' => ''
             ]
         );
 
         PembimbingTA::create([
-            'dosen_id' => request()->dosen_p1, 
+            'dosen_id' => $dosen_p1->id, 
             'mhs_id' => $mhs->id,
             'peran' => 'pembimbing_1'
         ]);
 
         PembimbingTA::create([
-            'dosen_id' => request()->dosen_p2, 
+            'dosen_id' => $dosen_p2->id, 
             'mhs_id' => $mhs->id,
             'peran' => 'pembimbing_2'
         ]);

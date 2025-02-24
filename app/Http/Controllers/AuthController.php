@@ -49,7 +49,7 @@ class AuthController extends Controller
                         'name' => $data['first_name'],
                         'role' => $data['status_login'],
                         'username' => $data['username'],
-                        'password' => 'yyysys7'
+                        'password' => ''
                     ]
                 );
 
@@ -57,7 +57,6 @@ class AuthController extends Controller
 
                 return redirect()->intended('/dashboard');
             }
-            
         }
 
         return back()->with(['loginError' => 'Username atau Password salah!']);

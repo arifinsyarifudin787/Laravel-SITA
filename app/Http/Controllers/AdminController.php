@@ -43,7 +43,7 @@ class AdminController extends Controller
             'dosen_p1' => ['required'],
             'dosen_p2' => ['required'],
         ]);
-        
+
         $existingTugasAkhir = TugasAkhir::where('nim', $validatedData['nim'])->first();
     
         if ($existingTugasAkhir) {
@@ -53,18 +53,6 @@ class AdminController extends Controller
         $validatedData['status'] = 'diajukan';
     
         TugasAkhir::create($validatedData);
-
-        // PembimbingTA::create([
-        //     'dosen_id' => $validatedData['dosen_1'],
-        //     'mhs_id' => $validatedData['mhs_id'],
-        //     'peran' => 'pembimbing_1'
-        // ]);
-
-        // PembimbingTA::create([
-        //     'dosen_id' => $validatedData['dosen_2'],
-        //     'mhs_id' => $validatedData['mhs_id'],
-        //     'peran' => 'pembimbing_2'
-        // ]);
 
         return back()->with('success', 'Tugas Akhir berhasil diajukan.');
     }
