@@ -34,7 +34,7 @@ class MahasiswaController extends Controller
             'bab' => ['required']
     	]);
         #ganti fk?
-    	$validatedData['mhs_id'] = auth()->user()->username;
+    	$validatedData['mhs_id'] = auth()->user()->id;
     	$validatedData['status'] = 'diajukan';
     	Bimbingan::create($validatedData);
 

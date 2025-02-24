@@ -51,14 +51,14 @@ Route::middleware('auth')->group(function () {
     
     Route::middleware(['role:mahasiswa'])->group(function () {
         Route::get('/bimbingan/tambah', [MahasiswaController::class, 'create']);
-        Route::post('/bimbingan', [MahasiswaController::class, 'store']);
+        Route::post('/bimbingan', [MahasiswaController::class, 'store'])->name('bimbingan.store');
         Route::delete('/bimbingan/{b:id}', [MahasiswaController::class, 'destroy']);
     });
     
     Route::middleware(['role:dosen'])->group(function () {
         Route::get('/mahasiswa/{mhs:id}', [DosenController::class, 'show']);
-        Route::post('/bimbingan/persetujuan', [DosenController::class, 'store']);
-        Route::post('/tugas-akhir/persetujuan', [DosenController::class, 'store']);
+        Route::post('/bimbingan/persetujuan', [DosenController::class, 'store'])->name('persetujuan.bimbingan');
+        Route::post('/tugas-akhir/persetujuan', [DosenController::class, 'store'])->name('persetujuan.ta');
     });
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

@@ -20,9 +20,12 @@ class DosenController extends Controller
 
     public function show(User $mhs)
     {   
+        $dosenId = auth()->id();
+
         return view('dosen.detail', [
             'title' => 'Bimbingan Mahasiswa',
             'mahasiswa' => $mhs,
+            'dosenId' => $dosenId
         ]);
     }
 

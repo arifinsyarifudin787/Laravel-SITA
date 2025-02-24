@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\PembimbingTA;
+use App\Models\User;
 use App\Models\TugasAkhir;
 
 class AdminController extends Controller
@@ -31,6 +31,7 @@ class AdminController extends Controller
     {
         return view('admin.create', [
             'title' => 'Tambah Tugas Akhir',
+            'dosens' => User::where('role', 'dosen')->get(),
         ]);
     }
 

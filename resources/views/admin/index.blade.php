@@ -1,18 +1,32 @@
 @extends('layouts.main')
 
 @section('container')
+<div class="main-content">
     <div class="flex flex-col items-center justify-center h-screen">
-        <h2 class="mb-4 text-3xl font-bold">Dashboard</h2>
-        <p>{{ auth()->user()->name }}</p>
-        @foreach ($tugas_akhirs as $ta)
-        <span> {{ $ta->mahasiswa->name }} {{ $ta->judul }}
-            <a href="/tugas-akhir/{{ $ta->id }}">Detail</a>
-        </span>
-        <br>
-        @endforeach
-        <form action="{{ route('logout') }}" method="POST">
-            @csrf
-            <button type="submit" class="px-4 py-2 text-white bg-red-600 rounded hover:bg-red-700">Logout</button>
-        </form>
+        <h2 class="mb-4 text-3xl font-bold">Dashboard Admin</h2>
+        <p class="mb-6">Selamat datang, {{ auth()->user()->name }}</p>
+
+        <!-- Tabel Tugas Akhir -->
+        <table class="table-auto">
+            <thead>
+                <tr>
+                    <th>Nama Mahasiswa</th>
+                    <th>Judul Tugas Akhir</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($tugas_akhirs as $ta)
+                    <tr>
+                        <td>{{ $ta->mahasiswa->name }}</td>
+                        <td>{{ $ta->judul }}</td>
+                        <td>
+                            <a href="/tugas-akhir/{{ $ta->id }}" class="btn-detail">Detail</a>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
     </div>
+</div>
 @endsection
