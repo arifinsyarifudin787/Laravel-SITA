@@ -16,7 +16,7 @@
             </thead>
             <tbody>
                 @php $no = 1; @endphp
-                @foreach ($mahasiswas as $mahasiswa)
+                @forelse ($mahasiswas as $mahasiswa)
                     <tr>
                         <td class="border border-gray-400 px-4 py-2 text-center">{{ $no++ }}</td>
                         <td class="border border-gray-400 px-4 py-2">{{ $mahasiswa->name }}</td>
@@ -24,7 +24,11 @@
                             <a href="/mahasiswa/{{ $mahasiswa->id }}" class="btn-detail">Detail</a>
                         </td>
                     </tr>
-                @endforeach
+                @empty
+                    <tr>
+                        <td colspan="3" class="text-center">Belum ada data Mahasiswa</td>
+                    </tr>
+                @endforelse
             </tbody>
         </table>
     </div>

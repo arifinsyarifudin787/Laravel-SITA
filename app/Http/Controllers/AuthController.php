@@ -18,6 +18,7 @@ class AuthController extends Controller
 
     public function authenticate(Request $request)
     {
+        // hapus kalo udah kelar
         if ($request['username'] === 'admin' || $request['username'] === '12345678910' || $request['username'] === '0987654321') {
             $credentials = $request->validate([
                 'username' => ['required'],
@@ -43,15 +44,17 @@ class AuthController extends Controller
         if ($response->successful()) {
             if ($response->json()['status'] === true) {
                 $data = $response->json()['data'];
-                $user = User::updateOrCreate(
-                    ['username' => $data['username']],
-                    [
+                $user = User::where('username', $data['username'])->first();
+                if ($user) {
+                    $user->update(['name' => $data['first_name']]);
+                } else {
+                    $user = User::create([
                         'name' => $data['first_name'],
                         'role' => $data['status_login'],
                         'username' => $data['username'],
-                        'password' => ''
-                    ]
-                );
+                        'password' => 'default'
+                    ]);
+                }
 
                 Auth::login($user);
 

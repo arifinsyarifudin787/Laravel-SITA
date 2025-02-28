@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Bimbingan;
+use App\Models\PersetujuanBimbingan;
 use App\Models\TugasAkhir;
 
 class MahasiswaController extends Controller
@@ -24,6 +25,7 @@ class MahasiswaController extends Controller
     {
         return view('mahasiswa.create', [
             'title' => 'Tambah Bimbingan',
+            'dosens' => auth()->user()->pembimbings,
         ]);
     }
 
@@ -31,14 +33,35 @@ class MahasiswaController extends Controller
     {
         $validatedData = $request->validate([
     		'tanggal_bimbingan' => ['required'],
-            'bab' => ['required']
+            'deskripsi' => ['required'],
     	]);
-        #ganti fk?
+        
     	$validatedData['mhs_id'] = auth()->user()->id;
     	$validatedData['status'] = 'diajukan';
-    	Bimbingan::create($validatedData);
 
-    	return redirect('dashboard')->with('success', 'Bimbingan berhasil dibuat');
+        $bimbingan = Bimbingan::where([
+            'tanggal_bimbingan' => $validatedData['tanggal_bimbingan'],
+            'deskripsi' => $validatedData['deskripsi'],
+        ])->first();
+
+        if (!$bimbingan) {
+    	    $bimbingan = Bimbingan::create($validatedData);
+        }
+
+        $persetujuan = PersetujuanBimbingan::where([
+            'bimbingan_id' => $bimbingan->id,
+            'dosen_id' => $request->dosen_id
+        ])->first();
+
+        if (!$persetujuan) {
+            PersetujuanBimbingan::create([
+                'bimbingan_id' => $bimbingan->id,
+                'dosen_id' => $request->dosen_id,
+                'status' => 'diajukan'
+            ]);
+        } 
+
+    	return back()->with('success', 'Bimbingan berhasil dibuat');
     }
 
     public function destroy(Bimbingan $bimbingan)

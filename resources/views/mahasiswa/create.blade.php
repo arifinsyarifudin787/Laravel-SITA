@@ -10,18 +10,18 @@
                 
                 <div class="mb-4">
                     <label for="tanggal" class="block text-gray-700 font-medium">Tanggal</label>
-                    <input type="date" id="tanggal" name="tanggal_bimbingan" class="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300">
+                    <input type="date" id="tanggal" name="tanggal_bimbingan" value="{{ old('tanggal_bimbingan') }}" class="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300">
                 </div>
                 
                 <div class="mb-4">
-                    <label for="bab" class="block text-gray-700 font-medium">Bab</label>
-                    <select id="bab" name="bab" class="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300">
-                        <option value="">Pilih Bab</option>
-                        <option value="I">Bab I</option>
-                        <option value="II">Bab II</option>
-                        <option value="III">Bab III</option>
-                        <option value="IV">Bab IV</option>
-                        <option value="V">Bab V</option>
+                    <label for="deskripsi" class="block text-gray-700 font-medium">Deskripsi</label>
+                    <input type="text" id="deskripsi" name="deskripsi" value="{{ old('deskripsi') }}" class="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300">
+                </div>
+                
+                <div class="mb-4">
+                    <label for="dosen" class="block text-gray-700 font-medium">Dosen Pembimbing</label>
+                    <select id="dosen" name="dosen" class="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300">
+                        <option value="">Pilih Dosen Pembimbing</option>
                     </select>
                 </div>
                 

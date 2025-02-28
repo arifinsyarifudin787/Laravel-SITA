@@ -29,21 +29,19 @@ class DosenController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function update(Request $request)
     {
-        $data['dosen_id'] = auth()->user()->id;
-        $data['status'] = $request->status;
-
         if ($request->type === 'bimbingan') {
-            $data['bimbingan_id'] = $request->bimbingan;
-
-            PersetujuanBimbingan::create($data);
-        } else if ($request->type === 'tugas_akhir') {
-            $data['tugas_akhir_id'] = $request->tugas_akhir;
-
-            PersetujuanTA::create($data);
+            $persetujuan = PersetujuanBimbingan::where('bimbingan_id', $request->bimbingan)->first();
+        } elseif ($request->type === 'tugas_akhir') {
+            $persetujuan = PersetujuanTA::where('tugas_akhir_id', $request->bimbingan)->first();
         }
-
-        return back()->with('success', 'Persetujuan berhasil disimpan.');
+    
+        if ($persetujuan) {
+            $persetujuan->update(['status' => $request->status]);
+            return back()->with('success', 'Persetujuan berhasil disimpan.');
+        }
+    
+        return back()->with('error', 'Data tidak ditemukan.');
     }
 }

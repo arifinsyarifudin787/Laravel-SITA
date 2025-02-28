@@ -3,7 +3,6 @@
 namespace App\Observers;
 
 use App\Models\PersetujuanTA;
-use App\Models\TugasAkhir;
 
 class PersetujuanTugasAkhirObserver
 {
@@ -12,21 +11,7 @@ class PersetujuanTugasAkhirObserver
      */
     public function created(PersetujuanTA $persetujuan): void
     {
-        $tugasAkhir = TugasAkhir::find($persetujuan->tugas_akhir_id);
-
-        if (!$tugasAkhir) {
-            return;
-        }
-
-        $persetujuanList = $tugasAkhir->persetujuans()->pluck('status');
-
-        if ($persetujuanList->contains('ditolak')) {
-            return;
-        }
-
-        if ($persetujuanList->count() == 2 && $persetujuanList->every(fn($status) => $status === 'disetujui')) {
-            $tugasAkhir->update(['status' => 'disetujui']);
-        }
+        //
     }
 
     /**
@@ -34,7 +19,17 @@ class PersetujuanTugasAkhirObserver
      */
     public function updated(PersetujuanTA $persetujuan): void
     {
-        //
+        $tugasAkhir = $persetujuan->tugasAkhir;
+
+        if (!$tugasAkhir) {
+            return;
+        }
+
+        $persetujuanList = $tugasAkhir->persetujuans()->pluck('status');
+
+        if ($persetujuanList->count() == 2 && $persetujuanList->every(fn($status) => $status === 'disetujui')) {
+            $tugasAkhir->update(['status' => 'disetujui']);
+        }
     }
 
     /**

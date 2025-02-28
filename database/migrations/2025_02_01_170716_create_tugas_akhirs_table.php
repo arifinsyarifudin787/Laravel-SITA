@@ -14,7 +14,7 @@ class CreateTugasAkhirsTable extends Migration
     public function up()
     {
         Schema::create('tugas_akhirs', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('nim');
             $table->text('judul');
             $table->enum('status', ['diajukan', 'disetujui', 'selesai']);

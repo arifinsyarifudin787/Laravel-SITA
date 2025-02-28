@@ -2,21 +2,20 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, HasUuids;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
+    protected $keyType = 'string';
+    public $incrementing = false;
+    protected $primaryKey = 'id';
+
     protected $fillable = [
         'name',
         'role',
@@ -24,21 +23,10 @@ class User extends Authenticatable
         'password',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
         'password',
-        'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
     protected $casts = [
         'password' => 'hashed',
     ];
@@ -50,12 +38,24 @@ class User extends Authenticatable
 
     public function pembimbings()
     {
-        return $this->hasMany(PembimbingTA::class, 'mhs_id');
+        return $this->hasManyThrough(
+            User::class,
+            PembimbingTA::class,
+            'mhs_id',
+            'id',
+            'id',
+            'dosen_id'
+        );
     }
 
     public function bimbingans()
     {
         return $this->hasMany(Bimbingan::class, 'mhs_id');
+    }
+
+    public function terakhirBimbingan()
+    {
+        return $this->bimbingans()->latest('tanggal_bimbingan')->first();
     }
 
     public function mahasiswaBimbingans()

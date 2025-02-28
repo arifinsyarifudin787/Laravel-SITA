@@ -57,8 +57,8 @@ Route::middleware('auth')->group(function () {
     
     Route::middleware(['role:dosen'])->group(function () {
         Route::get('/mahasiswa/{mhs:id}', [DosenController::class, 'show']);
-        Route::post('/bimbingan/persetujuan', [DosenController::class, 'store'])->name('persetujuan.bimbingan');
-        Route::post('/tugas-akhir/persetujuan', [DosenController::class, 'store'])->name('persetujuan.ta');
+        Route::put('/bimbingan/persetujuan', [DosenController::class, 'update'])->name('persetujuan.bimbingan');
+        Route::put('/tugas-akhir/persetujuan', [DosenController::class, 'update'])->name('persetujuan.ta');
     });
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

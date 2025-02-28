@@ -14,14 +14,14 @@ class CreatePersetujuanTASTable extends Migration
     public function up()
     {
         Schema::create('persetujuan_t_a_s', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('tugas_akhir_id')
+            $table->uuid('id')->primary();
+            $table->foreignUuid('tugas_akhir_id')
                   ->constrained()
                   ->cascadeOnDelete();
-            $table->foreignId('dosen_id')
+            $table->foreignUuid('dosen_id')
                   ->constrained('users')
                   ->nullOnDelete();
-            $table->enum('status', ['disetujui', 'ditolak']);
+            $table->enum('status', ['diajukan', 'disetujui']);
             $table->timestamps();
         });
     }

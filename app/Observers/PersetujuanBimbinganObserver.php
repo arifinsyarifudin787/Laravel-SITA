@@ -3,7 +3,6 @@
 namespace App\Observers;
 
 use App\Models\PersetujuanBimbingan;
-use App\Models\Bimbingan;
 
 class PersetujuanBimbinganObserver
 {
@@ -12,7 +11,15 @@ class PersetujuanBimbinganObserver
      */
     public function created(PersetujuanBimbingan $persetujuan): void
     {
-        $bimbingan = Bimbingan::find($persetujuan->bimbingan_id);
+        //
+    }
+
+    /**
+     * Handle the PersetujuanBimbingan "updated" event.
+     */
+    public function updated(PersetujuanBimbingan $persetujuan): void
+    {
+        $bimbingan = $persetujuan->bimbingan();
 
         if (!$bimbingan) {
             return;
@@ -22,20 +29,9 @@ class PersetujuanBimbinganObserver
 
         if ($persetujuanList->contains('ditolak')) {
             $bimbingan->update(['status' => 'ditolak']);
-            return;
-        }
-
-        if ($persetujuanList->count() == 2 && $persetujuanList->every(fn($status) => $status === 'disetujui')) {
+        } else if ($persetujuanList->count() == 2 && $persetujuanList->every(fn($status) => $status === 'disetujui')) {
             $bimbingan->update(['status' => 'disetujui']);
         }
-    }
-
-    /**
-     * Handle the PersetujuanBimbingan "updated" event.
-     */
-    public function updated(PersetujuanBimbingan $persetujuan): void
-    {
-        //
     }
 
     /**

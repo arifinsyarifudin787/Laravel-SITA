@@ -14,12 +14,12 @@ class CreatePembimbingTASTable extends Migration
     public function up()
     {
         Schema::create('pembimbing_t_a_s', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('dosen_id')
+            $table->uuid('id')->primary();
+            $table->foreignUuid('dosen_id')
                   ->constrained('users')
-                  ->cascadeOnDelete();
+                  ->nullOnDelete();
             $table->enum('peran', ['pembimbing_1', 'pembimbing_2']);
-            $table->foreignId('mhs_id')
+            $table->foreignUuid('mhs_id')
                   ->constrained('users')
                   ->cascadeOnDelete();
             $table->timestamps();

@@ -18,23 +18,21 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @if ($bimbingans->isNotEmpty())
-                            @foreach ($bimbingans as $index => $bimbingan)
-                                <tr>
-                                    <td>{{ $index + 1 }}</td> 
-                                    <td>{{ auth()->user()->name }}</td>
-                                    <td>{{ $tugas_akhir->judul }}</td>
-                                    <td>{{ $bimbingan->tanggal_bimbingan }}</td>
-                                    <td class="{{ $bimbingan->status === 'disetujui' ? 'text-green-600' : 'text-red-600' }}">
-                                        {{ $bimbingan->status }}
-                                    </td>
-                                </tr>
-                            @endforeach
-                        @else
+                        @forelse ($bimbingans as $index => $bimbingan)
                             <tr>
-                                <td colspan="5" class="text-center">Tidak ada data bimbingan</td>
+                                <td>{{ $index + 1 }}</td> 
+                                <td>{{ auth()->user()->name }}</td>
+                                <td>{{ $tugas_akhir->judul }}</td>
+                                <td>{{ $bimbingan->tanggal_bimbingan }}</td>
+                                <td class="{{ $bimbingan->status === 'disetujui' ? 'text-green-600' : 'text-red-600' }}">
+                                    {{ $bimbingan->status }}
+                                </td>
                             </tr>
-                        @endif
+                        @empty
+                            <tr>
+                                <td colspan="5" class="text-center">Belum ada bimbingan</td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>

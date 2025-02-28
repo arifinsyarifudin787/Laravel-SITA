@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Models\TugasAkhir;
 use App\Models\PembimbingTA;
+use App\Models\PersetujuanTA;
 use App\Models\User;
 use Illuminate\Support\Facades\Log;
 
@@ -14,50 +15,44 @@ class TugasAkhirObserver
      */
     public function created(TugasAkhir $tugasAkhir): void
     {
-        $mhs = User::updateOrCreate(
-            ['username' => $tugasAkhir->nim],
-            [
-                'name' => request()->nama,
-                'role' => 'mahasiswa',
+        $mhs = User::where('username', $tugasAkhir->nim)->first();
+        if (!$mhs) {
+            $mhs = User::create([
                 'username' => $tugasAkhir->nim,
-                'password' => ''
-            ]
-        );
-
-        $dosen_p1_data = json_decode(request()->dosen_p1, true);
-        $dosen_p2_data = json_decode(request()->dosen_p2, true);
-
-        $dosen_p1 = User::updateOrCreate(
-            ['username' => $dosen_p1_data['username']],
-            [
-                'name' => $dosen_p1_data['name'],
-                'role' => 'dosen',
-                'username' => $dosen_p1_data['username'],
-                'password' => ''
-            ]
-        );
-
-        $dosen_p2 = User::updateOrCreate(
-            ['username' => $dosen_p2_data['username']],
-            [
-                'name' => $dosen_p2_data['name'],
-                'role' => 'dosen',
-                'username' => $dosen_p2_data['username'],
-                'password' => ''
-            ]
-        );
-
-        PembimbingTA::create([
-            'dosen_id' => $dosen_p1->id, 
-            'mhs_id' => $mhs->id,
-            'peran' => 'pembimbing_1'
-        ]);
-
-        PembimbingTA::create([
-            'dosen_id' => $dosen_p2->id, 
-            'mhs_id' => $mhs->id,
-            'peran' => 'pembimbing_2'
-        ]);
+                'name' => request('nama'),
+                'role' => 'mahasiswa',
+                'password' => 'default'
+            ]);
+        }
+    
+        $dosens = [
+            'pembimbing_1' => json_decode(request('dosen_p1'), true),
+            'pembimbing_2' => json_decode(request('dosen_p2'), true)
+        ];
+    
+        foreach ($dosens as $peran => $dosenData) {
+            $dosen = User::where('username', $dosenData['username'])->first();
+            if (!$dosen) {
+                $dosen = User::create([
+                    'username' => $dosenData['username'],
+                    'name' => $dosenData['name'],
+                    'role' => 'dosen',
+                    'password' => 'default'
+                ]);
+            }
+    
+            PembimbingTA::create([
+                'dosen_id' => $dosen->id,
+                'mhs_id' => $mhs->id,
+                'peran' => $peran
+            ]);
+    
+            PersetujuanTA::create([
+                'tugas_akhir_id' => $tugasAkhir->id,
+                'dosen_id' => $dosen->id,
+                'status' => 'diajukan'
+            ]);
+        }
     }
 
     /**
@@ -65,7 +60,7 @@ class TugasAkhirObserver
      */
     public function updated(TugasAkhir $tugasAkhir): void
     {
-        //
+        PembimbingTA::where('mhs_id', $tugasAkhir->mahasiswa->id)->delete();
     }
 
     /**

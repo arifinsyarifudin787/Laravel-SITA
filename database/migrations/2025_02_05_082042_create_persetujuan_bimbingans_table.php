@@ -14,14 +14,14 @@ class CreatePersetujuanBimbingansTable extends Migration
     public function up()
     {
         Schema::create('persetujuan_bimbingans', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('bimbingan_id')
+            $table->uuid('id')->primary();
+            $table->foreignUuid('bimbingan_id')
                   ->constrained()
                   ->cascadeOnDelete();
-            $table->foreignId('dosen_id')
+            $table->foreignUuid('dosen_id')
                   ->constrained('users')
                   ->nullOnDelete();
-            $table->enum('status', ['disetujui', 'ditolak']);
+            $table->enum('status', ['diajukan', 'disetujui', 'ditolak']);
             $table->timestamps();
         });
     }

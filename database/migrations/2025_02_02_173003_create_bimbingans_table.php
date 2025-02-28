@@ -14,12 +14,12 @@ class CreateBimbingansTable extends Migration
     public function up()
     {
         Schema::create('bimbingans', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->date('tanggal_bimbingan');
-            $table->foreignId('mhs_id')
+            $table->foreignUuid('mhs_id')
                   ->constrained('users')
                   ->cascadeOnDelete();
-            $table->string('bab');
+            $table->text('deskripsi');
             $table->enum('status', ['diajukan', 'disetujui', 'ditolak']);
             $table->timestamps();
         });

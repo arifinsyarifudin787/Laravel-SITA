@@ -16,7 +16,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($tugas_akhirs as $ta)
+                @forelse ($tugas_akhirs as $ta)
                     <tr>
                         <td>{{ $ta->mahasiswa->name }}</td>
                         <td>{{ $ta->judul }}</td>
@@ -24,7 +24,11 @@
                             <a href="/tugas-akhir/{{ $ta->id }}" class="btn-detail">Detail</a>
                         </td>
                     </tr>
-                @endforeach
+                @empty
+                    <tr>
+                        <td colspan="3" class="text-center">Belum ada Tugas Akhir</td>
+                    </tr>
+                @endforelse
             </tbody>
         </table>
     </div>
