@@ -11,6 +11,7 @@
                 <tr class="bg-gray-200">
                     <th class="border border-gray-400 px-4 py-2">No</th>
                     <th class="border border-gray-400 px-4 py-2">Nama Mahasiswa</th>
+                    <th class="border border-gray-400 px-4 py-2">Bimbingan Terakhir</th>
                     <th class="border border-gray-400 px-4 py-2">Aksi</th>
                 </tr>
             </thead>
@@ -20,6 +21,7 @@
                     <tr>
                         <td class="border border-gray-400 px-4 py-2 text-center">{{ $no++ }}</td>
                         <td class="border border-gray-400 px-4 py-2">{{ $mahasiswa->name }}</td>
+                        <td class="border border-gray-400 px-4 py-2">{{ $mahasiswa->terakhirBimbingan()->tanggal() }}</td>
                         <td class="border border-gray-400 px-4 py-2 text-center">
                             <a href="/mahasiswa/{{ $mahasiswa->id }}" class="btn-detail">Detail</a>
                         </td>

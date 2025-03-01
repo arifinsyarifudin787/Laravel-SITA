@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Carbon\Carbon;
 
 class Bimbingan extends Model
 {
@@ -20,6 +21,15 @@ class Bimbingan extends Model
         'deskripsi',
         'status'
     ];
+
+    protected $casts = [
+        'tanggal_bimbingan' => 'date',
+    ];
+
+    public function tanggal()
+    {
+        return Carbon::parse($this->tanggal_bimbingan)->translatedFormat('j, F Y');
+    }
 
     public function mahasiswa()
     {
@@ -37,9 +47,9 @@ class Bimbingan extends Model
             ->where('dosen_id', function ($query) {
                 $query->select('dosen_id')
                       ->from('pembimbing_t_a_s')
-                      ->whereColumn('mhs_id', 'bimbingans.mhs_id')
+                      ->where('mhs_id', $this->mhs_id)
                       ->where('peran', 'pembimbing_1');
-            });
+            })->first();
     }
 
     public function persetujuanPembimbing2()
@@ -48,8 +58,8 @@ class Bimbingan extends Model
             ->where('dosen_id', function ($query) {
                 $query->select('dosen_id')
                       ->from('pembimbing_t_a_s')
-                      ->whereColumn('mhs_id', 'bimbingans.mhs_id')
+                      ->where('mhs_id', $this->mhs_id)
                       ->where('peran', 'pembimbing_2');
-            });
+            })->first();
     }
 }

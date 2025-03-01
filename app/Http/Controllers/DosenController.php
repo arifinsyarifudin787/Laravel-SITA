@@ -21,6 +21,11 @@ class DosenController extends Controller
     public function show(User $mhs)
     {   
         $dosenId = auth()->id();
+        $mhs->load(['bimbingans' => function ($query) use ($dosenId) {
+            $query->whereHas('persetujuans', function ($q) use ($dosenId) {
+                $q->where('dosen_id', $dosenId);
+            });
+        }]);
 
         return view('dosen.detail', [
             'title' => 'Bimbingan Mahasiswa',
@@ -32,9 +37,15 @@ class DosenController extends Controller
     public function update(Request $request)
     {
         if ($request->type === 'bimbingan') {
-            $persetujuan = PersetujuanBimbingan::where('bimbingan_id', $request->bimbingan)->first();
-        } elseif ($request->type === 'tugas_akhir') {
-            $persetujuan = PersetujuanTA::where('tugas_akhir_id', $request->bimbingan)->first();
+            $persetujuan = PersetujuanBimbingan::where([
+                'bimbingan_id' => $request->bimbingan,
+                'dosen_id' => auth()->user()->id,
+            ])->first();
+        } else if ($request->type === 'tugas_akhir') {
+            $persetujuan = PersetujuanTA::where([
+                'tugas_akhir_id' => $request->tugas_akhir,
+                'dosen_id' => auth()->user()->id,
+            ])->first();
         }
     
         if ($persetujuan) {

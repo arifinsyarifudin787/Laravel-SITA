@@ -550,6 +550,45 @@ header {
     transform: translateY(0);
 }
 
+.card {
+    width: 150px;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: bold;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card.blue {
+    background-color: #bfdbfe; /* Tailwind blue-200 */
+    color: #1e3a8a; /* Tailwind blue-900 */
+}
+
+.card.green {
+    background-color: #bbf7d0; /* Tailwind green-200 */
+    color: #065f46; /* Tailwind green-900 */
+}
+
+.card.gray {
+    background-color: #e5e7eb; /* Tailwind gray-200 */
+    color: #374151; /* Tailwind gray-900 */
+}
+
+.card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+}
+
+.card p {
+    font-size: 2rem;
+}
+
+.card-container {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
 /* Responsive Styles */
 @media (max-width: 640px) {
     .main-content {

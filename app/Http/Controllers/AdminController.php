@@ -6,21 +6,33 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\TugasAkhir;
+use App\Exports\TugasAkhirExport;
+use Maatwebsite\Excel\Facades\Excel;
+use Carbon\Carbon;
 
 class AdminController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $tugas_akhirs = TugasAkhir::with('mahasiswa')->get();
-        return view('admin.index', [
-            'title' => 'Dashboard',
-            'tugas_akhirs' => $tugas_akhirs,
-        ]);
+        $status = $request->input('status', 'diajukan');
+
+        $countDiajukan = TugasAkhir::where('status', 'diajukan')->count();
+        $countDisetujui = TugasAkhir::where('status', 'disetujui')->count();
+        $countSelesai = TugasAkhir::where('status', 'selesai')->count();
+    
+        $query = TugasAkhir::query();
+        if ($status) {
+            $query->where('status', $status);
+        }
+        $tugas_akhirs = $query->get();
+    
+        return view('admin.index',['title' => 'Dashboard'], compact('tugas_akhirs', 'countDiajukan', 'countDisetujui', 'countSelesai', 'status'));
     }
 
     public function show(TugasAkhir $ta)
     {   
         $mhs = $ta->mahasiswa;
+
         return view('admin.detail', [
             'title' => 'Bimbingan Mahasiswa',
             'mahasiswa' => $mhs,
@@ -62,5 +74,21 @@ class AdminController extends Controller
         $ta->update(['status' => 'selesai']);
 
         return back()->with('success', 'Status tugas akhir berhasil diperbarui.');
+    }
+
+    public function export(Request $request)
+    {
+        $status = $request->input('status');
+        $timestamp = Carbon::now()->format('Y-m-d_H-i-s');
+        
+        return Excel::download(new TugasAkhirExport($status), "tugas_akhir_{$status}_{$timestamp}.xlsx");
+    }
+
+    private function getDosens()
+    {
+        // Fetch API
+        $dosens = [];
+
+        return $dosens;
     }
 }

@@ -25,9 +25,9 @@ class PersetujuanTugasAkhirObserver
             return;
         }
 
-        $persetujuanList = $tugasAkhir->persetujuans()->pluck('status');
+        $persetujuanList = $tugasAkhir->persetujuans->pluck('status');
 
-        if ($persetujuanList->count() == 2 && $persetujuanList->every(fn($status) => $status === 'disetujui')) {
+        if ($persetujuanList->every(fn($status) => $status === 'disetujui')) {
             $tugasAkhir->update(['status' => 'disetujui']);
         }
     }

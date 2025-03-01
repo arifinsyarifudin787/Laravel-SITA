@@ -50,18 +50,18 @@ class MahasiswaController extends Controller
 
         $persetujuan = PersetujuanBimbingan::where([
             'bimbingan_id' => $bimbingan->id,
-            'dosen_id' => $request->dosen_id
+            'dosen_id' => $request->dosen
         ])->first();
 
         if (!$persetujuan) {
             PersetujuanBimbingan::create([
                 'bimbingan_id' => $bimbingan->id,
-                'dosen_id' => $request->dosen_id,
+                'dosen_id' => $request->dosen,
                 'status' => 'diajukan'
             ]);
         } 
 
-    	return back()->with('success', 'Bimbingan berhasil dibuat');
+    	return back()->with('success', 'Bimbingan berhasil dibuat')->withInput();
     }
 
     public function destroy(Bimbingan $bimbingan)

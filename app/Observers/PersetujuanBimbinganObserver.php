@@ -19,17 +19,17 @@ class PersetujuanBimbinganObserver
      */
     public function updated(PersetujuanBimbingan $persetujuan): void
     {
-        $bimbingan = $persetujuan->bimbingan();
+        $bimbingan = $persetujuan->bimbingan;
 
         if (!$bimbingan) {
             return;
         }
 
-        $persetujuanList = $bimbingan->persetujuans()->pluck('status');
+        $persetujuanList = $bimbingan->persetujuans->pluck('status');
 
         if ($persetujuanList->contains('ditolak')) {
             $bimbingan->update(['status' => 'ditolak']);
-        } else if ($persetujuanList->count() == 2 && $persetujuanList->every(fn($status) => $status === 'disetujui')) {
+        } else if ($persetujuanList->every(fn($status) => $status === 'disetujui')) {
             $bimbingan->update(['status' => 'disetujui']);
         }
     }

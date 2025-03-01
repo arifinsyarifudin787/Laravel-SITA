@@ -6,7 +6,6 @@ use App\Models\TugasAkhir;
 use App\Models\PembimbingTA;
 use App\Models\PersetujuanTA;
 use App\Models\User;
-use Illuminate\Support\Facades\Log;
 
 class TugasAkhirObserver
 {

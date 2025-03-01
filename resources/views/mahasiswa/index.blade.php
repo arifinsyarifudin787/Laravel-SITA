@@ -11,9 +11,10 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Nama</th>
-                            <th>Judul TA</th>
                             <th>Tanggal Bimbingan</th>
+                            <th>Deskripsi</th>
+                            <th>Dosen 1</th>
+                            <th>Dosen 2</th>
                             <th>Status</th>
                         </tr>
                     </thead>
@@ -21,16 +22,17 @@
                         @forelse ($bimbingans as $index => $bimbingan)
                             <tr>
                                 <td>{{ $index + 1 }}</td> 
-                                <td>{{ auth()->user()->name }}</td>
-                                <td>{{ $tugas_akhir->judul }}</td>
-                                <td>{{ $bimbingan->tanggal_bimbingan }}</td>
+                                <td>{{ $bimbingan->tanggal() }}</td>
+                                <td>{{ $bimbingan->deskripsi }}</td>
+                                <td>{{ $bimbingan->persetujuanPembimbing1() ? $bimbingan->persetujuanPembimbing1()->status : '-' }}</td>
+                                <td>{{ $bimbingan->persetujuanPembimbing2() ? $bimbingan->persetujuanPembimbing2()->status : '-' }}</td>
                                 <td class="{{ $bimbingan->status === 'disetujui' ? 'text-green-600' : 'text-red-600' }}">
                                     {{ $bimbingan->status }}
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="5" class="text-center">Belum ada bimbingan</td>
+                                <td colspan="6" class="text-center">Belum ada bimbingan</td>
                             </tr>
                         @endforelse
                     </tbody>

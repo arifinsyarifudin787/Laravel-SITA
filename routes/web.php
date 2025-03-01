@@ -37,16 +37,17 @@ Route::middleware('auth')->group(function () {
         return match ($user->role) {
             'mahasiswa' => app(MahasiswaController::class)->index(),
             'dosen' => app(DosenController::class)->index(),
-            'admin' => app(AdminController::class)->index(),
+            'admin' => app(AdminController::class)->index(request()),
             default => abort(403),
         };
     })->name('dashboard');
     
     Route::middleware(['role:admin'])->group(function () {
         Route::get('/tugas-akhir/tambah', [AdminController::class, 'create'])->name('ta.create');
+        Route::get('/tugas-akhir/export', [AdminController::class, 'export'])->name('ta.export');
         Route::get('/tugas-akhir/{ta:id}', [AdminController::class, 'show']);
         Route::post('/tugas-akhir', [AdminController::class, 'store'])->name('ta.store');
-        Route::put('/tugas-akhir/{ta:id}', [AdminController::class, 'update']);
+        Route::put('/tugas-akhir/{ta:id}', [AdminController::class, 'update'])->name('ta.update');
     });
     
     Route::middleware(['role:mahasiswa'])->group(function () {
