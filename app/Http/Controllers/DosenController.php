@@ -12,20 +12,30 @@ class DosenController extends Controller
 {
     public function index()
     {   
+        $mahasiswas = auth()->user()->mahasiswaBimbingans()
+            ->with(['bimbingans' => function ($query) {
+                $query->latest();
+            }])
+            ->get();
+
         return view('dosen.index', [
             'title' => 'Dashboard',
-            'mahasiswas' => auth()->user()->mahasiswaBimbingans,
+            'mahasiswas' => $mahasiswas,
         ]);
     }
 
     public function show(User $mhs)
     {   
         $dosenId = auth()->id();
-        $mhs->load(['bimbingans' => function ($query) use ($dosenId) {
-            $query->whereHas('persetujuans', function ($q) use ($dosenId) {
-                $q->where('dosen_id', $dosenId);
-            });
-        }]);
+    
+        $mhs->load([
+            'bimbingans.persetujuans' => function ($query) use ($dosenId) {
+                $query->where('dosen_id', $dosenId);
+            },
+            'tugasAkhir.persetujuans' => function ($query) use ($dosenId) {
+                $query->where('dosen_id', $dosenId);
+            }
+        ]);
 
         return view('dosen.detail', [
             'title' => 'Bimbingan Mahasiswa',

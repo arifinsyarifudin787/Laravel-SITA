@@ -28,7 +28,7 @@
                     <select id="dosen_p1" name="dosen_p1" class="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300 select2">
                         <option value="">Pilih Dosen</option>
                         @foreach($dosens as $d)
-                            <option value='{"username": "{{ $d->username }}", "name": "{{ $d->name }}"}'>{{ $d->name }}</option>
+                            <option value='{"username": "{{ $d['username'] }}", "name": "{{ $d['name'] }}"}'>{{ $d['name'] }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -38,7 +38,7 @@
                     <select id="dosen_p2" name="dosen_p2" class="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300 select2">
                         <option value="">Pilih Dosen</option>
                         @foreach($dosens as $d)
-                            <option value='{"username": "{{ $d->username }}", "name": "{{ $d->name }}"}'>{{ $d->name }}</option>
+                            <option value='{"username": "{{ $d['username'] }}", "name": "{{ $d['name'] }}"}'>{{ $d['name'] }}</option>
                         @endforeach
                     </select>
                 </div>

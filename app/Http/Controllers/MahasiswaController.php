@@ -12,20 +12,31 @@ class MahasiswaController extends Controller
 {
     public function index()
     {
-        $user_id = auth()->user()->id;
-        $username = auth()->user()->username;
+        $mahasiswa = auth()->user()->mahasiswa;
+
+        $bimbingans = Bimbingan::with(['persetujuanPembimbing1', 'persetujuanPembimbing2'])
+            ->where('mhs_id', $mahasiswa->id)
+            ->orderBy('tanggal_bimbingan', 'desc')
+            ->get();
+
         return view('mahasiswa.index', [
             'title' => 'Dashboard',
-            'bimbingans' => Bimbingan::where('mhs_id', $user_id)->get(),
-            'tugas_akhir' => TugasAkhir::where('nim', $username)->first(),
+            'bimbingans' => $bimbingans,
         ]);
     }
 
     public function create()
     {
+        $user = auth()->user();
+        $tugasAkhir = $user->tugasAkhir;
+
+        if (!$tugasAkhir || $tugasAkhir->status !== 'diajukan') {
+            return redirect()->route('mahasiswa.index')->with('error', 'Tidak dapat menambah Bimbingan baru. Silakan hubungi admin.');
+        }
+
         return view('mahasiswa.create', [
             'title' => 'Tambah Bimbingan',
-            'dosens' => auth()->user()->pembimbings,
+            'dosens' => $user->pembimbings->get(),
         ]);
     }
 

@@ -45,14 +45,12 @@ class AuthController extends Controller
             if ($response->json()['status'] === true) {
                 $data = $response->json()['data'];
                 $user = User::where('username', $data['username'])->first();
-                if ($user) {
-                    $user->update(['name' => $data['first_name']]);
-                } else {
+                if (!$user) {
                     $user = User::create([
-                        'name' => $data['first_name'],
+                        'name' => ucwords(strtolower($data['first_name'])),
                         'role' => $data['status_login'],
                         'username' => $data['username'],
-                        'password' => 'default'
+                        'password' => bcrypt('default')
                     ]);
                 }
 

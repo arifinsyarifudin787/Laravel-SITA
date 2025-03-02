@@ -6,9 +6,10 @@
         <h2 class="mb-4 text-3xl font-bold">{{ $mahasiswa->name }}</h2>
         Judul TA: {{ $mahasiswa->tugasAkhir->judul }} 
         @foreach ($mahasiswa->pembimbings as $index => $p)
-        Pembimbing {{ $index + 1 }}: {{ $p->name }}
         <br>
+        Pembimbing {{ $index + 1 }}: {{ $p->name }}
         @endforeach
+        
         <!-- Tabel Detail Bimbingan -->
         <table class="table-auto border-collapse border border-gray-400 mt-4">
             <thead>

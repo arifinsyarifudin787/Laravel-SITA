@@ -16,19 +16,23 @@
                 </tr>
             </thead>
             <tbody>
-                @php $no = 1; @endphp
                 @forelse ($mahasiswas as $mahasiswa)
+                    @php
+                        $bimbinganTerakhir = $mahasiswa->terakhirBimbingan();
+                    @endphp
                     <tr>
-                        <td class="border border-gray-400 px-4 py-2 text-center">{{ $no++ }}</td>
+                        <td class="border border-gray-400 px-4 py-2 text-center">{{ $loop->iteration }}</td>
                         <td class="border border-gray-400 px-4 py-2">{{ $mahasiswa->name }}</td>
-                        <td class="border border-gray-400 px-4 py-2">{{ $mahasiswa->terakhirBimbingan()->tanggal() }}</td>
+                        <td class="border border-gray-400 px-4 py-2">
+                            {{ $bimbinganTerakhir ? $bimbinganTerakhir->tanggal() : '-' }}
+                        </td>
                         <td class="border border-gray-400 px-4 py-2 text-center">
                             <a href="/mahasiswa/{{ $mahasiswa->id }}" class="btn-detail">Detail</a>
                         </td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="3" class="text-center">Belum ada data Mahasiswa</td>
+                        <td colspan="4" class="text-center">Belum ada data Mahasiswa</td>
                     </tr>
                 @endforelse
             </tbody>

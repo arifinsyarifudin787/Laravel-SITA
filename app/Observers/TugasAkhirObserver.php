@@ -16,11 +16,12 @@ class TugasAkhirObserver
     {
         $mhs = User::where('username', $tugasAkhir->nim)->first();
         if (!$mhs) {
+            // fetch nama mhs
             $mhs = User::create([
                 'username' => $tugasAkhir->nim,
                 'name' => request('nama'),
                 'role' => 'mahasiswa',
-                'password' => 'default'
+                'password' => bcrypt('default')
             ]);
         }
     
@@ -36,7 +37,7 @@ class TugasAkhirObserver
                     'username' => $dosenData['username'],
                     'name' => $dosenData['name'],
                     'role' => 'dosen',
-                    'password' => 'default'
+                    'password' => bcrypt('default')
                 ]);
             }
     
@@ -59,7 +60,9 @@ class TugasAkhirObserver
      */
     public function updated(TugasAkhir $tugasAkhir): void
     {
-        PembimbingTA::where('mhs_id', $tugasAkhir->mahasiswa->id)->delete();
+        if ($tugasAkhir->status === "selesai") {
+            PembimbingTA::where('mhs_id', $tugasAkhir->mahasiswa->id)->delete();
+        }
     }
 
     /**

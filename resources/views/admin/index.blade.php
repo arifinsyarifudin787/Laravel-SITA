@@ -26,9 +26,9 @@
         <form action="{{ route('dashboard') }}" method="GET" class="mb-4">
             <label for="status" class="mr-2">Filter Status:</label>
             <select name="status" id="status" onchange="this.form.submit()">
-                <option value="diajukan" selected>Diajukan</option>
-                <option value="disetujui" {{ request('status') == 'disetujui' ? 'selected' : '' }}>Disetujui</option>
-                <option value="selesai" {{ request('status') == 'selesai' ? 'selected' : '' }}>Selesai</option>
+                <option value="diajukan" {{ $status == 'diajukan' ? 'selected' : '' }}>Diajukan</option>
+                <option value="disetujui" {{ $status == 'disetujui' ? 'selected' : '' }}>Disetujui</option>
+                <option value="selesai" {{ $status == 'selesai' ? 'selected' : '' }}>Selesai</option>
             </select>
         </form>
 
@@ -50,8 +50,14 @@
                 @forelse ($tugas_akhirs as $ta)
                     <tr>
                         <td>{{ $ta->nim }}</td>
-                        <td>{{ $ta->mahasiswa->name }}</td>
-                        <td>{{ $ta->mahasiswa->bimbingans->count() / 16 * 100 }}%</td>
+                        <td>{{ optional($ta->mahasiswa)->name ?? '-' }}</td>
+                        <td>
+                            @php
+                                $totalBimbingan = optional($ta->mahasiswa)->bimbingans->count() ?? 0;
+                                $progress = $totalBimbingan > 0 ? ($totalBimbingan / 16 * 100) : 0;
+                            @endphp
+                            {{ number_format($progress, 1) }}%
+                        </td>
                         <td>
                             <a href="/tugas-akhir/{{ $ta->id }}" class="btn-detail">Detail</a>
                             @if ($ta->status === 'disetujui')
