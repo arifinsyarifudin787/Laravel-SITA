@@ -32,6 +32,40 @@ class AuthController extends Controller
             }
         }
 
+        if (strlen($request->username) == 18) {
+            $response = Http::withOptions([
+                'verify' => false
+            ])->asForm()->post('https://sip.uinsgd.ac.id/sip_module/ws/login', [
+                'token' => '2y10bJ09e9jzVxNjKe8wis8eIgIUSQi0rrgQGmck313jL0mNJK9G',
+                'username' => $request->username,
+                'password' => $request->password,
+            ]);
+            
+            if ($response->successful()) {
+                if ($response->json()['message'] === 'success') {
+                    $data = $response->json()['profil'];
+                    $user = User::where('username', $data['nip'])->first();
+                    if (!$user) {
+                        $user = User::create([
+                            'name' => trim(
+                                ($data['gelar_depan'] ? $data['gelar_depan'] . ' ' : '') . 
+                                $data['nama'] . 
+                                ($data['gelar_belakang'] ? ', ' . $data['gelar_belakang'] : '')
+                            ),
+                            'role' => 'dosen',
+                            'username' => $data['nip'],
+                            'password' => bcrypt('default')
+                        ]);
+                    }
+    
+                    Auth::login($user);
+    
+                    return redirect()->intended('/dashboard');
+                }
+            }
+
+        }
+
         $response = Http::withOptions([
             'verify' => false
         ])->withHeaders([

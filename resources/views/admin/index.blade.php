@@ -53,7 +53,7 @@
                         <td>{{ optional($ta->mahasiswa)->name ?? '-' }}</td>
                         <td>
                             @php
-                                $totalBimbingan = optional($ta->mahasiswa)->bimbingans->count() ?? 0;
+                                $totalBimbingan = optional($ta->mahasiswa)->bimbingans->sum(fn($bimbingan) => $bimbingan->persetujuanBimbingan->count()) ?? 0;
                                 $progress = $totalBimbingan > 0 ? ($totalBimbingan / 16 * 100) : 0;
                             @endphp
                             {{ number_format($progress, 1) }}%

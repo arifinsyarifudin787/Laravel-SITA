@@ -57,8 +57,7 @@
             $persetujuanTA = optional($mahasiswa->tugasAkhir)->persetujuans->first();
         @endphp
         
-        <!-- Bagian tombol acc TA sesuain kondisinya -->
-        @if ($persetujuanTA && $persetujuanTA->status === 'diajukan')
+        @if ($mahasiswa->bimbingans->count() > 7 && $persetujuanTA->status === 'diajukan')
             <form action="{{ route('persetujuan.ta') }}" method="POST">
                 @method('PUT')
                 @csrf
@@ -66,11 +65,10 @@
                 <input name="tugas_akhir" value="{{ $mahasiswa->tugasAkhir->id }}" hidden>
                 <button type="submit" name="status" value="disetujui" class="btn btn-green">✅ Setujui</button>
             </form>
-        @elseif ($persetujuanTA)
+        @endif
             <b class="{{ $persetujuanTA->status === 'disetujui' ? 'text-green-600' : 'text-red-600' }}">
                 Status: {{ $persetujuanTA->status }}
             </b>
-        @endif
     </div>
 </div>
 @endsection
