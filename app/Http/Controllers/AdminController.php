@@ -21,7 +21,7 @@ class AdminController extends Controller
         $countDisetujui = TugasAkhir::where('status', 'disetujui')->count();
         $countSelesai = TugasAkhir::where('status', 'selesai')->count();
 
-        $tugas_akhirs = TugasAkhir::with(['mahasiswa.bimbingans.persetujuanBimbingan'])
+        $tugas_akhirs = TugasAkhir::with(['mahasiswa.bimbingans.persetujuans'])
             ->when($status, fn($query) => $query->where('status', $status))
             ->get();
         

@@ -16,7 +16,8 @@ class MahasiswaController extends Controller
 
         $bimbingans = Bimbingan::with(['persetujuanPembimbing1', 'persetujuanPembimbing2'])
             ->where('mhs_id', $mahasiswa->id)
-            ->orderBy('tanggal_bimbingan', 'desc');
+            ->orderBy('tanggal_bimbingan', 'desc')
+            ->get();
 
         return view('mahasiswa.index', [
             'title' => 'Dashboard',
@@ -35,7 +36,7 @@ class MahasiswaController extends Controller
 
         return view('mahasiswa.create', [
             'title' => 'Tambah Bimbingan',
-            'dosens' => $user->pembimbings->get(),
+            'dosens' => $user->pembimbings,
         ]);
     }
 

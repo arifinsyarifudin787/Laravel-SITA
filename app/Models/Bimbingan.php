@@ -49,7 +49,7 @@ class Bimbingan extends Model
                       ->from('pembimbing_t_a_s')
                       ->where('mhs_id', $this->mhs_id)
                       ->where('peran', 'pembimbing_1');
-            })->first();
+            });
     }
 
     public function persetujuanPembimbing2()
@@ -60,6 +60,6 @@ class Bimbingan extends Model
                       ->from('pembimbing_t_a_s')
                       ->where('mhs_id', $this->mhs_id)
                       ->where('peran', 'pembimbing_2');
-            })->first();
+            });
     }
 }
