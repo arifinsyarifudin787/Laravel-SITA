@@ -12,12 +12,11 @@ class MahasiswaController extends Controller
 {
     public function index()
     {
-        $mahasiswa = auth()->user()->mahasiswa;
+        $mahasiswa = auth()->user();
 
         $bimbingans = Bimbingan::with(['persetujuanPembimbing1', 'persetujuanPembimbing2'])
             ->where('mhs_id', $mahasiswa->id)
-            ->orderBy('tanggal_bimbingan', 'desc')
-            ->get();
+            ->orderBy('tanggal_bimbingan', 'desc');
 
         return view('mahasiswa.index', [
             'title' => 'Dashboard',
@@ -31,7 +30,7 @@ class MahasiswaController extends Controller
         $tugasAkhir = $user->tugasAkhir;
 
         if (!$tugasAkhir || $tugasAkhir->status !== 'diajukan') {
-            return redirect()->route('mahasiswa.index')->with('error', 'Tidak dapat menambah Bimbingan baru. Silakan hubungi admin.');
+            return redirect()->route('dashboard')->with('error', 'Tidak dapat menambah Bimbingan baru. Silakan hubungi admin.');
         }
 
         return view('mahasiswa.create', [
