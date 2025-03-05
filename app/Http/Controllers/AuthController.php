@@ -18,20 +18,7 @@ class AuthController extends Controller
 
     public function authenticate(Request $request)
     {
-        // hapus kalo udah kelar
-        if ($request['username'] === 'admin' || $request['username'] === '12345678910' || $request['username'] === '0987654321') {
-            $credentials = $request->validate([
-                'username' => ['required'],
-                'password' => ['required'],
-            ]);
-    
-            if (Auth::attempt($credentials)) {
-                $request->session()->regenerate();
-    
-                return redirect()->intended('/dashboard');
-            }
-        }
-
+        // Untuk dosen
         if (strlen($request->username) == 18) {
             $response = Http::withOptions([
                 'verify' => false
@@ -66,6 +53,7 @@ class AuthController extends Controller
 
         }
 
+        // Untuk mahasiswa dan admin
         $response = Http::withOptions([
             'verify' => false
         ])->withHeaders([
@@ -92,6 +80,18 @@ class AuthController extends Controller
 
                 return redirect()->intended('/dashboard');
             }
+        }
+
+        // Untuk dosen dari luar kampus
+        $credentials = $request->validate([
+            'username' => ['required'],
+            'password' => ['required'],
+        ]);
+    
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+    
+            return redirect()->intended('/dashboard');
         }
 
         return back()->with(['loginError' => 'Username atau Password salah!']);
