@@ -19,14 +19,19 @@
         @if (auth()->user()->role === 'admin')
         <li>
             <a href="{{ route('ta.create') }}" class="{{ $title === 'Tambah Tugas Akhir' ? 'active' : '' }}">
-                <i class="fas fa-file"></i> Tambah Tugas Akhir
+                <i class="fas fa-folder-plus"></i> Tambah Tugas Akhir
+            </a>
+        </li>
+        <li>
+            <a href="{{ route('dosen.show') }}" class="{{ $title === 'Data Dosen Luar' ? 'active' : '' }}">
+                <i class="fas fa-circle-user"></i> Data Dosen Luar
             </a>
         </li>
         @endif
         @if (auth()->user()->role === 'mahasiswa')
         <li>
             <a href="{{ route('bimbingan.create') }}" class="{{ $title === 'Tambah Bimbingan' ? 'active' : '' }}">
-                <i class="fas fa-chalkboard-teacher"></i> Tambah Bimbingan
+                <i class="fas fa-note-sticky"></i> Tambah Bimbingan
             </a>
         </li>
         @endif
