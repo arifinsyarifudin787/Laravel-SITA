@@ -3,9 +3,9 @@
 @section("container")
     <div class="login-container">
         <h2>Login</h2>
-        @if(session('loginError'))
+        @if(session('error'))
         <div id="alertBox" class="alert-box error">
-            <span>{{ session('loginError') }}</span>
+            <span>{{ session('error') }}</span>
             <button id="closeAlert">✖</button>
         </div>
         @endif
