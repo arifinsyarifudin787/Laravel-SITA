@@ -3,7 +3,7 @@
 @section('container')
     <div class="main-content">
         <div class="flex flex-col items-center justify-center">
-            <h2 class="mb-4 text-3xl font-bold">Bimbingan</h2>
+            <h2 class="mb-4 text-3xl font-bold">Data Bimbingan</h2>
             <div class="w-full px-4 md:px-0 overflow-x-auto">
                 @if (session('error'))
                 <div id="alertBox" class="alert-box error">

@@ -18,16 +18,16 @@
                         <label for="tanggal" class="block text-gray-700 font-medium">Tanggal</label>
                         <input type="date" id="tanggal" name="tanggal_bimbingan"
                             value="{{ old('tanggal_bimbingan') }}" 
-                            class="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300">
+                            class="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300" required>
                     </div>
                     <div class="mb-4">
                         <label for="deskripsi" class="block text-gray-700 font-medium">Deskripsi</label>
                         <textarea id="deskripsi" name="deskripsi" rows="4"
-                            class="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300">{{ old('deskripsi') }}</textarea>
+                            class="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300" required>{{ old('deskripsi') }}</textarea>
                     </div>
                     <div class="mb-4">
                         <label for="dosen" class="block text-gray-700 font-medium">Dosen Pembimbing</label>
-                        <select id="dosen" name="dosen" class="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300">
+                        <select id="dosen" name="dosen" class="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300" required>
                             <option value="">Pilih Dosen Pembimbing</option>
                             @foreach ($dosens as $d)
                             <option value="{{ $d->id }}" {{ old('dosen') == $d->id ? 'selected' : '' }}>{{ $d->name }}</option>
