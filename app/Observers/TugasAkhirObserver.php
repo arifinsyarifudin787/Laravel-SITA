@@ -60,9 +60,7 @@ class TugasAkhirObserver
      */
     public function updated(TugasAkhir $tugasAkhir): void
     {
-        if ($tugasAkhir->status === "selesai") {
-            PembimbingTA::where('mhs_id', $tugasAkhir->mahasiswa->id)->delete();
-        }
+        //
     }
 
     /**
