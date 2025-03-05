@@ -6,6 +6,7 @@ use App\Models\TugasAkhir;
 use App\Models\PembimbingTA;
 use App\Models\PersetujuanTA;
 use App\Models\User;
+use Illuminate\Support\Str;
 
 class TugasAkhirObserver
 {
@@ -16,12 +17,11 @@ class TugasAkhirObserver
     {
         $mhs = User::where('username', $tugasAkhir->nim)->first();
         if (!$mhs) {
-            // fetch nama mhs
             $mhs = User::create([
                 'username' => $tugasAkhir->nim,
                 'name' => request('nama'),
                 'role' => 'mahasiswa',
-                'password' => bcrypt('default')
+                'password' => bcrypt(Str::random(8))
             ]);
         }
     
@@ -37,7 +37,7 @@ class TugasAkhirObserver
                     'username' => $dosenData['username'],
                     'name' => $dosenData['name'],
                     'role' => 'dosen',
-                    'password' => bcrypt('default')
+                    'password' => bcrypt(Str::random(8))
                 ]);
             }
     
