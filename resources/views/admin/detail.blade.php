@@ -2,7 +2,7 @@
 
 @section('container')
 <div class="main-content">
-    <div class="flex flex-col items-center justify-center h-screen">
+    <div class="flex flex-col items-center justify-center">
         <h2 class="mb-4 text-3xl font-bold">{{ $mahasiswa->name }}</h2>
 
         <!-- Tabel Detail Bimbingan -->
