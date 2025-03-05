@@ -51,12 +51,14 @@ Route::middleware('auth')->group(function () {
     Route::middleware(['role:admin'])->group(function () {
         Route::get('/tugas-akhir/tambah', [AdminController::class, 'createTA'])->name('ta.create');
         Route::get('/tugas-akhir/export', [AdminController::class, 'exportTA'])->name('ta.export');
-        Route::get('/tugas-akhir/{ta:id}', [AdminController::class, 'showTA']);
+        Route::get('/tugas-akhir/{ta:id}', [AdminController::class, 'showTA'])->name('ta.show');
+        Route::get('/tugas-akhir/edit/{ta:id}', [AdminController::class, 'editTA'])->name('ta.edit');
         Route::post('/tugas-akhir', [AdminController::class, 'storeTA'])->name('ta.store');
         Route::put('/tugas-akhir/{ta:id}', [AdminController::class, 'updateTA'])->name('ta.update');
+        Route::delete('/tugas-akhir/{ta:id}', [AdminController::class, 'destroyTA'])->name('ta.destroy');
         Route::get('/dosen', [AdminController::class, 'showDosen'])->name('dosen.show');
         Route::get('/dosen/tambah', [AdminController::class, 'createDosen'])->name('dosen.create');
-        Route::get('/dosen/edit', [AdminController::class, 'editDosen'])->name('dosen.edit');
+        Route::get('/dosen/edit/{dosen:id}', [AdminController::class, 'editDosen'])->name('dosen.edit');
         Route::post('/dosen', [AdminController::class, 'storeDosen'])->name('dosen.store');
         Route::put('/dosen/{dosen:id}', [AdminController::class, 'updateDosen'])->name('dosen.update');
         Route::delete('/dosen/{dosen:id}', [AdminController::class, 'destroyDosen'])->name('dosen.destroy');
