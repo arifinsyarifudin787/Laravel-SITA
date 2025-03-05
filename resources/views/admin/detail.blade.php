@@ -33,8 +33,10 @@
                     <td>{{ $bimbingan->deskripsi }}</td>
                     <td>{{ $bimbingan->persetujuanPembimbing1 ? $bimbingan->persetujuanPembimbing1->status : '-' }}</td>
                     <td>{{ $bimbingan->persetujuanPembimbing2 ? $bimbingan->persetujuanPembimbing2->status : '-' }}</td>
-                    <td class="{{ $bimbingan->status === 'disetujui' ? 'text-green-600' : 'text-red-600' }}">
-                        {{ $bimbingan->status }}
+                    <td>
+                        <b class="{{ $bimbingan->status === 'disetujui' ? 'text-green-600' : ($bimbingan->status === 'ditolak' ? 'text-red-600' : '')}}">
+                            {{ $bimbingan->status }}
+                        </b>
                     </td>
                 </tr>
                 @empty
