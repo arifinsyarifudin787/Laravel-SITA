@@ -9,3 +9,9 @@ function toggleSidebar() {
     mainContent.classList.toggle('active');
     hamburgerMenu.classList.toggle('active');
 }
+
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("closeAlert")?.addEventListener("click", function() {
+        document.getElementById("alertBox").remove();
+    });
+});
