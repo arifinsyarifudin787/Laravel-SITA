@@ -22,22 +22,22 @@
                     
                     <div class="mb-4">
                         <label for="nim" class="block text-gray-700 font-medium">NIM</label>
-                        <input type="text" id="nim" name="nim" class="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300">
+                        <input type="text" id="nim" name="nim" class="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300" required>
                     </div>
 
                     <div class="mb-4">
                         <label for="nama" class="block text-gray-700 font-medium">Nama</label>
-                        <input type="text" id="nama" name="nama" class="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300">
+                        <input type="text" id="nama" name="nama" class="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300" required>
                     </div>
 
                     <div class="mb-4">
                         <label for="judul" class="block text-gray-700 font-medium">Judul</label>
-                        <input type="text" id="judul" name="judul" class="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300">
+                        <input type="text" id="judul" name="judul" class="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300" required>
                     </div>
                     
                     <div class="mb-4">
                         <label for="dosen_p1" class="block text-gray-700 font-medium">Dosen Pembimbing 1</label>
-                        <select id="dosen_p1" name="dosen_p1" class="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300 select2">
+                        <select id="dosen_p1" name="dosen_p1" class="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300" required>
                             <option value="">Pilih Dosen</option>
                             @foreach($dosens as $d)
                                 <option value='{"username": "{{ $d['username'] }}", "name": "{{ $d['name'] }}"}'>{{ $d['name'] }}</option>
@@ -47,7 +47,7 @@
 
                     <div class="mb-4">
                         <label for="dosen_p2" class="block text-gray-700 font-medium">Dosen Pembimbing 2</label>
-                        <select id="dosen_p2" name="dosen_p2" class="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300 select2">
+                        <select id="dosen_p2" name="dosen_p2" class="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300" required>
                             <option value="">Pilih Dosen</option>
                             @foreach($dosens as $d)
                                 <option value='{"username": "{{ $d['username'] }}", "name": "{{ $d['name'] }}"}'>{{ $d['name'] }}</option>
