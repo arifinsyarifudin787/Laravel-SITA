@@ -30,7 +30,7 @@
                     <b class="{{ $persetujuanTA->status === 'disetujui' ? 'text-green-600' : 'text-red-600' }}">
                         Status: {{ $persetujuanTA->status }}
                     </b>
-                    @if ($mahasiswa->bimbingans->count() > -1 && $persetujuanTA->status === 'diajukan')
+                    @if ($mahasiswa->bimbingans->count() > 7 && $persetujuanTA->status === 'diajukan')
                     <form action="{{ route('persetujuan.ta') }}" method="POST">
                         @method('PUT')
                         @csrf

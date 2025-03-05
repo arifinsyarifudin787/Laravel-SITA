@@ -2,8 +2,8 @@
 
 @section('container')
 <div class="main-content">
-    <div class="flex flex-col items-center justify-center h-screen">
-        <h2 class="mb-4 text-3xl font-bold">Dashboard</h2>
+    <div class="flex flex-col items-center justify-center">
+        <h2 class="mb-4 text-3xl font-bold">Data Mahasiswa Bimbingan</h2>
 
         <!-- Tabel Mahasiswa -->
         <table class="table-auto border-collapse border border-gray-400 mt-4">
@@ -27,7 +27,7 @@
                             {{ $bimbinganTerakhir ? $bimbinganTerakhir->tanggal() : '-' }}
                         </td>
                         <td class="border border-gray-400 px-4 py-2 text-center">
-                            <a href="/mahasiswa/{{ $mahasiswa->id }}" class="btn-detail">Detail</a>
+                            <a href="/mahasiswa/{{ $mahasiswa->id }}" class="bttn btn-detail">Detail</a>
                         </td>
                     </tr>
                 @empty
