@@ -3,8 +3,11 @@
 @section("container")
     <div class="login-container">
         <h2>Login</h2>
-        @if(session()->has('loginError'))
-            <p class="login-error">{{ session('loginError') }}</p>
+        @if(session('loginError'))
+        <div id="alertBox" class="alert-box error">
+            <span>{{ session('loginError') }}</span>
+            <button id="closeAlert">✖</button>
+        </div>
         @endif
         <form action="{{ route('login.process') }}" method="POST">
             @csrf
