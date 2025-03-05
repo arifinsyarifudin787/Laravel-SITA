@@ -29,14 +29,10 @@ class DosenController extends Controller
         $dosenId = auth()->id();
     
         $mhs->load([
-            'bimbingans' => function ($query) {
-                $query->orderBy('tanggal_bimbingan', 'asc');
-            },
-            'bimbingans.persetujuans' => function ($query) use ($dosenId) {
-                $query->where('dosen_id', $dosenId);
-            },
-            'tugasAkhir.persetujuans' => function ($query) use ($dosenId) {
-                $query->where('dosen_id', $dosenId);
+            'bimbingans' => function ($query) use ($dosenId) {
+                $query->whereHas('persetujuans', function ($subQuery) use ($dosenId) {
+                    $subQuery->where('dosen_id', $dosenId);
+                })->orderBy('tanggal_bimbingan', 'asc');
             }
         ]);
 
@@ -55,7 +51,7 @@ class DosenController extends Controller
                 'dosen_id' => auth()->user()->id,
             ])->first();
             $persetujuan->update(['status' => $request->status]);
-            
+            dd($persetujuan);
             return back()->with('success', 'Status bimbingan berhasil diperbaharui.');
         } else if ($request->type === 'tugas_akhir') {
             $persetujuan = PersetujuanTA::where([
