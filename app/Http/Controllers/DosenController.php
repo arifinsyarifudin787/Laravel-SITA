@@ -29,6 +29,9 @@ class DosenController extends Controller
         $dosenId = auth()->id();
     
         $mhs->load([
+            'bimbingans' => function ($query) {
+                $query->orderBy('tanggal_bimbingan', 'asc');
+            },
             'bimbingans.persetujuans' => function ($query) use ($dosenId) {
                 $query->where('dosen_id', $dosenId);
             },
@@ -51,16 +54,17 @@ class DosenController extends Controller
                 'bimbingan_id' => $request->bimbingan,
                 'dosen_id' => auth()->user()->id,
             ])->first();
+            $persetujuan->update(['status' => $request->status]);
+            
+            return back()->with('success', 'Status bimbingan berhasil diperbaharui.');
         } else if ($request->type === 'tugas_akhir') {
             $persetujuan = PersetujuanTA::where([
                 'tugas_akhir_id' => $request->tugas_akhir,
                 'dosen_id' => auth()->user()->id,
             ])->first();
-        }
-    
-        if ($persetujuan) {
             $persetujuan->update(['status' => $request->status]);
-            return back()->with('success', 'Persetujuan berhasil disimpan.');
+
+            return back()->with('success', 'Status tugas akhir berhasil diperbaharui.');
         }
     
         return back()->with('error', 'Data tidak ditemukan.');
