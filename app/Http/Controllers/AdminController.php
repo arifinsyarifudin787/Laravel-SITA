@@ -35,9 +35,12 @@ class AdminController extends Controller
         ]);
     }
 
-    public function show(TugasAkhir $ta)
+    public function showTA(TugasAkhir $ta)
     {   
         $mhs = $ta->mahasiswa->load([
+            'bimbingans' => function ($query) {
+                $query->orderBy('tanggal_bimbingan', 'asc');
+            },
             'bimbingans.persetujuans',
             'pembimbings'
         ]);
@@ -48,11 +51,11 @@ class AdminController extends Controller
         ]);
     }
 
-    public function create()
+    public function createTA()
     {   
         $dosens = $this->getDosens();
 
-        if (!$dosens) {
+        if ($dosens) {
             $dosens = User::where('role', 'dosen')->get();
         }
 
@@ -62,7 +65,7 @@ class AdminController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function storeTA(Request $request)
     {
         $validatedData = $request->validate([
             'nim' => ['required'],
@@ -74,24 +77,31 @@ class AdminController extends Controller
         $existingTugasAkhir = TugasAkhir::where('nim', $validatedData['nim'])->first();
     
         if ($existingTugasAkhir) {
-            return back()->with('error', 'Tugas Akhir dengan NIM ini sudah ada.');
+            return back()->with('error', 'Tugas Akhir dengan NIM '.$request->nim.' sudah ada.')->withInput();
+        }
+
+        $dosen1 = json_decode(request('dosen_p1'), true);
+        $dosen2 = json_decode(request('dosen_p2'), true);
+
+        if ($dosen1['username'] === $dosen2['username']) {
+            return back()->with('error', 'Dosen pembimbing tidak boleh sama.')->withInput();
         }
 
         $validatedData['status'] = 'diajukan';
     
         TugasAkhir::create($validatedData);
 
-        return back()->with('success', 'Tugas Akhir berhasil diajukan.');
+        return back()->with('success', 'Tugas Akhir berhasil ditambahkan.')->withInput();
     }
 
-    public function update(TugasAkhir $ta)
+    public function updateTA(TugasAkhir $ta)
     {
         $ta->update(['status' => 'selesai']);
 
         return back()->with('success', 'Status tugas akhir berhasil diperbarui.');
     }
 
-    public function export(Request $request)
+    public function exportTA(Request $request)
     {
         $status = $request->input('status');
         $timestamp = Carbon::now()->format('Y-m-d_H-i-s');
