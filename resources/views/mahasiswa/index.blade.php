@@ -43,8 +43,10 @@
                                 <td class="border px-4 py-2 text-center">
                                     {{ optional($bimbingan->persetujuanPembimbing2)->status ?? '-' }}
                                 </td>
-                                <td class="border px-4 py-2 text-center {{ $bimbingan->status === 'disetujui' ? 'text-green-600' : 'text-red-600' }}">
-                                    {{ $bimbingan->status }}
+                                <td class="border px-4 py-2 text-center">
+                                    <b class="{{ $bimbingan->status === 'disetujui' ? 'text-green-600' : ($bimbingan->status === 'ditolak' ? 'text-red-600' : '')}}">
+                                        {{ $bimbingan->status }}
+                                    </b>
                                 </td>
                                 <td class="border px-4 py-2 text-center">
                                     @if ($bimbingan->persetujuans->every(fn($p) => $p->status === 'diajukan'))
