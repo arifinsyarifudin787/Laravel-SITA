@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\PembimbingTA;
 use App\Models\TugasAkhir;
 use App\Exports\TugasAkhirExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Http;
 
 class AdminController extends Controller
@@ -55,8 +57,19 @@ class AdminController extends Controller
     {   
         $dosens = $this->getDosens();
 
-        if ($dosens) {
+        if (!$dosens) {
             $dosens = User::where('role', 'dosen')->get();
+        } else {
+            $dosenLuar = User::whereNotNull('asal_pt')
+                ->select('username', 'name')
+                ->get()
+                ->toArray();
+
+            $dosens = collect($dosens)
+                ->merge($dosenLuar)
+                ->unique('username')
+                ->values()
+                ->toArray();
         }
 
         return view('admin.create', [
@@ -69,6 +82,7 @@ class AdminController extends Controller
     {
         $validatedData = $request->validate([
             'nim' => ['required'],
+            'nama' => ['required'],
             'judul' => ['required'],
             'dosen_p1' => ['required'],
             'dosen_p2' => ['required'],
@@ -91,14 +105,88 @@ class AdminController extends Controller
     
         TugasAkhir::create($validatedData);
 
-        return back()->with('success', 'Tugas Akhir berhasil ditambahkan.')->withInput();
+        return back()->with('success', 'Tugas akhir berhasil ditambahkan.');
     }
 
-    public function updateTA(TugasAkhir $ta)
+    public function editTA(TugasAkhir $ta)
+    {
+        $dosens = $this->getDosens();
+
+        if (!$dosens) {
+            $dosens = User::where('role', 'dosen')->get();
+        } else {
+            $dosenLuar = User::whereNotNull('asal_pt')
+                ->select('username', 'name')
+                ->get()
+                ->toArray();
+
+            $dosens = collect($dosens)
+                ->merge($dosenLuar)
+                ->unique('username')
+                ->values()
+                ->toArray();
+        }
+
+        $pembimbingTA = PembimbingTA::where('mhs_id', $ta->mahasiswa->id)->get();
+        
+        $pembimbing1 = $pembimbingTA->where('peran', 'pembimbing_1')->first()->dosen->username;
+        $pembimbing2 = $pembimbingTA->where('peran', 'pembimbing_2')->first()->dosen->username;
+
+        return view('admin.edit', [
+            'title' => 'Edit Tugas Akhir',
+            'ta' => $ta,
+            'dosens' => $dosens,
+            'pembimbing1' => $pembimbing1,
+            'pembimbing2' => $pembimbing2,
+        ]);
+    }
+
+    public function updateTA(TugasAkhir $ta, Request $request)
+    {
+        $ta->update(['judul' => $request->judul]);
+        $mhs = $ta->mahasiswa;
+
+        $pembimbingTA = PembimbingTA::where('mhs_id', $mhs->id)->get();
+        $persetujuanTA = $ta->persetujuans;
+
+        $dosens = [json_decode(request('dosen_p1'), true), json_decode(request('dosen_p2'), true)];
+
+        $i = 0;
+        foreach ($pembimbingTA as $p) {
+            $dosen = User::where('username', $dosens[$i]['username'])->first();
+            if (!$dosen) {
+                $dosen = User::create([
+                    'username' => $dosens[$i]['username'],
+                    'name' => $dosens[$i]['name'],
+                    'role' => 'dosen',
+                    'password' => bcrypt(Str::random(8))
+                ]);
+            }
+            $p->update([
+                'dosen_id' => $dosen->id,
+                'peran' => 'pembimbing_' . ($i+1)
+            ]);
+            $i++;
+        }
+
+        $i = 0;
+        foreach ($persetujuanTA as $p) {
+            $dosen = User::where('username', $dosens[$i]['username'])->first();
+
+            $p->update([
+                'dosen_id' => $dosen->id,
+            ]);
+            $i++;
+        }
+
+        return back()->with('success', 'Tugas akhir berhasil diperbaharui.');
+    }
+
+    public function destroyTA(TugasAkhir $ta)
     {
         $ta->update(['status' => 'selesai']);
 
-        return back()->with('success', 'Status tugas akhir berhasil diperbarui.');
+        return back()->with('success', 'Tugas akhir berhasil diarsipkan.');
     }
 
     public function exportTA(Request $request)
@@ -135,5 +223,92 @@ class AdminController extends Controller
         }
 
         return false;
+    }
+
+    public function showDosen()
+    {
+        $dosens = User::whereNotNull('asal_pt')->get();
+        return view('admin.dosen.index', [
+            'title' => 'Data Dosen Luar',
+            'dosens' => $dosens
+        ]);
+    }
+
+    public function createDosen()
+    {
+        return view('admin.dosen.create', [
+            'title' => 'Tambah Data Dosen'
+        ]);
+    }
+
+    public function storeDosen(Request $request)
+    {
+        $validatedData = $request->validate([
+            'username' => ['required'],
+            'name' => ['required'],
+            'asal_pt' => ['required'],
+            'password' => ['required'],
+            'konfirmasi_sandi' => ['required'],
+        ]);
+
+        if ($validatedData['password'] !== $validatedData['konfirmasi_sandi']) {
+            return back()->with('error', 'Kata sandi dan konfirmasi kata sandi harus sama.')->withInput();
+        }
+        
+        $existingUser = User::where('username', $validatedData['username'])->first();
+    
+        if ($existingUser) {
+            return back()->with('error', 'Dosen dengan NIP '.$request->username.' sudah ada.')->withInput();
+        }
+
+        $validatedData['role'] = 'dosen';
+
+        User::create($validatedData);
+
+        return back()->with('success', 'Data dosen berhasil ditambahkan.');
+    }
+
+    public function editDosen(User $dosen)
+    {
+        return view('admin.dosen.edit', [
+            'title' => 'Edit Data Dosen',
+            'dosen' => $dosen,
+        ]);
+    }
+
+    public function updateDosen(User $dosen, Request $request)
+    { 
+        $validatedData = $request->validate([
+            'username' => ['required'],
+            'name' => ['required'],
+            'asal_pt' => ['required'],
+        ]);
+
+        if ($request['password'] !== null) {
+            if ($request['password'] !== $request['konfirmasi_sandi']) {
+                return back()->with('error', 'Kata sandi dan konfirmasi kata sandi harus sama.')->withInput();
+            }
+
+            $validatedData['password'] = $request['password'];
+        }
+        
+        $existingUser = User::where('username', $validatedData['username'])
+            ->where('id', '!=', $dosen->id)
+            ->first();
+
+        if ($existingUser) {
+            return back()->with('error', 'Dosen dengan NIP '.$request->username.' sudah ada.')->withInput();
+        }
+
+        $dosen->update($validatedData);
+
+        return back()->with('success', 'Data dosen berhasil diperbaharui.');
+    }
+
+    public function destroyDosen(User $dosen)
+    {
+        User::destroy($dosen->id);
+
+        return back()->with('success', 'Berhasil menghapus data dosen.');
     }
 }
