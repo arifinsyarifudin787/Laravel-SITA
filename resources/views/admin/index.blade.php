@@ -2,42 +2,54 @@
 
 @section('container')
 <div class="main-content">
-    <div class="flex flex-col items-center justify-center h-screen">
-        <h2 class="mb-4 text-3xl font-bold">Dashboard Admin</h2>
-        <p class="mb-6">Selamat datang, {{ auth()->user()->name }}</p>
-
-        <!-- Kartu Statistik -->
-        <div class="card-container">
-            <div class="card blue">
-                <h3>On Going</h3>
-                <p>{{ $countDiajukan }}</p>
-            </div>
-            <div class="card green">
-                <h3>Siap Sidang</h3>
-                <p>{{ $countDisetujui }}</p>
-            </div>
-            <div class="card gray">
-                <h3>Selesai</h3>
-                <p>{{ $countSelesai }}</p>
-            </div>
-        </div>
-
-        <!-- Filter -->
-        <form action="{{ route('dashboard') }}" method="GET" class="mb-4">
-            <label for="status" class="mr-2">Filter Status:</label>
-            <select name="status" id="status" onchange="this.form.submit()">
-                <option value="diajukan" {{ $status == 'diajukan' ? 'selected' : '' }}>Diajukan</option>
-                <option value="disetujui" {{ $status == 'disetujui' ? 'selected' : '' }}>Disetujui</option>
-                <option value="selesai" {{ $status == 'selesai' ? 'selected' : '' }}>Selesai</option>
-            </select>
-        </form>
-
-        <a href="{{ route('ta.export', ['status' => $status]) }}" class="px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600">
-            Buat Laporan
-        </a>
-
-        <!-- Tabel Tugas Akhir -->
+    <div class="flex flex-col items-center justify-center">
+        <h2 class="mb-4 text-3xl font-bold">Dashboard</h2>
         <table class="table-auto">
+            @if (session('error'))
+            <div id="alertBox" class="alert-box error">
+                <span>{{ session('error') }}</span>
+                <button id="closeAlert">✖</button>
+            </div>
+            @endif
+            @if (session('success'))
+            <div id="alertBox" class="alert-box success">
+                <span>{{ session('success') }}</span>
+                <button id="closeAlert">✖</button>
+            </div>
+            @endif
+            <div class="info-container">
+                <div class="card-container">
+                    <div class="card blue">
+                        <h3>On Going</h3>
+                        <p>{{ $countDiajukan }}</p>
+                    </div>
+                    <div class="card green">
+                        <h3>Siap Sidang</h3>
+                        <p>{{ $countDisetujui }}</p>
+                    </div>
+                    <div class="card gray">
+                        <h3>Selesai</h3>
+                        <p>{{ $countSelesai }}</p>
+                    </div>
+                </div>
+
+                <div class="justify-between">
+                    <div>
+                        <form action="{{ route('dashboard') }}" method="GET" class="mb-4">
+                            <label for="status" class="text-gray-700 font-medium">Filter Status:</label>
+                            <select name="status" id="status" class="filter" onchange="this.form.submit()">
+                                <option value="diajukan" {{ $status == 'diajukan' ? 'selected' : '' }}>Diajukan</option>
+                                <option value="disetujui" {{ $status == 'disetujui' ? 'selected' : '' }}>Disetujui</option>
+                                <option value="selesai" {{ $status == 'selesai' ? 'selected' : '' }}>Selesai</option>
+                            </select>
+                        </form>
+                    </div>
+
+                    <a href="{{ route('ta.export', ['status' => $status]) }}" class="bttn btn-download">
+                        Unduh Laporan
+                    </a>
+                </div>
+            </div>
             <thead>
                 <tr>
                     <th>NIM</th>
@@ -59,14 +71,19 @@
                             {{ number_format($progress, 1) }}%
                         </td>
                         <td>
-                            <a href="/tugas-akhir/{{ $ta->id }}" class="btn-detail">Detail</a>
-                            @if ($ta->status === 'disetujui')
-                            <form action="{{ route('ta.update', $ta->id) }}" method="POST">
-                                @method('PUT')
-                                @csrf
-                                <button type="submit" class="btn btn-red">Arsipkan</button>
-                            </form>
-                            @endif
+                            <div class="action-buttons">
+                                <a href="{{ route('ta.show', $ta->id) }}" class="bttn btn-detail">Detail</a>
+                                @if ($progress === 0)
+                                <a href="{{ route('ta.edit', $ta->id) }}" class="bttn btn-edit">Edit</a>
+                                @endif
+                                @if ($ta->status === 'disetujui')
+                                <form action="{{ route('ta.destroy', $ta->id) }}" method="POST">
+                                    @method('DELETE')
+                                    @csrf
+                                    <button type="submit" class="bttn btn-archive">Arsipkan</button>
+                                </form>
+                                @endif
+                            </div>
                         </td>
                     </tr>
                 @empty
