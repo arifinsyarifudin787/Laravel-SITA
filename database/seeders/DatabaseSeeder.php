@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
         User::create([
             'name' => 'Bina Ragawan, M.T.',
             'role' => 'dosen',
+            'asal_pt' => 'Universitas Gadjah Mada',
             'username' => '0987654321',
             'password' => 'pabina'
         ]);
@@ -24,6 +25,7 @@ class DatabaseSeeder extends Seeder
         User::create([
             'name' => 'Dedi Suhardi, S.T., M.Kom.',
             'role' => 'dosen',
+            'asal_pt' => 'Universitas Indonesia',
             'username' => '12345678910',
             'password' => 'padedi'
         ]);
