@@ -4,14 +4,17 @@
 <div class="main-content">
     <div class="flex flex-col items-center justify-center h-screen">
         <h2 class="mb-4 text-3xl font-bold">{{ $mahasiswa->name }}</h2>
-        Judul TA: {{ $mahasiswa->tugasAkhir->judul }} 
-        @foreach ($mahasiswa->pembimbings as $index => $p)
-        <br>
-        Pembimbing {{ $index + 1 }}: {{ $p->name }}
-        @endforeach
-        
+
         <!-- Tabel Detail Bimbingan -->
         <table class="table-auto border-collapse border border-gray-400 mt-4">
+            <div class="info-container">
+                Judul TA: <b><i>{{ $mahasiswa->tugasAkhir->judul ?? '-' }}</i></b>
+                <br>
+                @foreach ($mahasiswa->pembimbings as $index => $p)
+                <br>
+                Pembimbing {{ $index + 1 }}: {{ $p->name }}
+                @endforeach
+            </div>
             <thead>
                 <tr>
                     <th>No</th>
