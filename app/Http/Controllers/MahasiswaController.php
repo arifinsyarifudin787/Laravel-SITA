@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Bimbingan;
 use App\Models\PersetujuanBimbingan;
-use App\Models\TugasAkhir;
 
 class MahasiswaController extends Controller
 {
@@ -14,9 +13,9 @@ class MahasiswaController extends Controller
     {
         $mahasiswa = auth()->user();
 
-        $bimbingans = Bimbingan::with(['persetujuanPembimbing1', 'persetujuanPembimbing2'])
+        $bimbingans = Bimbingan::with(['persetujuans'])
             ->where('mhs_id', $mahasiswa->id)
-            ->orderBy('tanggal_bimbingan', 'desc')
+            ->orderBy('tanggal_bimbingan', 'asc')
             ->get();
 
         return view('mahasiswa.index', [
@@ -72,13 +71,13 @@ class MahasiswaController extends Controller
             ]);
         } 
 
-    	return back()->with('success', 'Bimbingan berhasil dibuat')->withInput();
+    	return back()->with('success', 'Bimbingan berhasil ditambahkan.')->withInput();
     }
 
-    public function destroy(Bimbingan $bimbingan)
+    public function destroy(Bimbingan $b)
     {
-        Bimbingan::destroy($bimbingan->id);
+        Bimbingan::destroy($b->id);
 
-        return redirect('dashboard')->with('success', 'Bimbingan berhasil dihapus');
+        return redirect('dashboard')->with('success', 'Bimbingan berhasil dihapus.');
     }
 }
