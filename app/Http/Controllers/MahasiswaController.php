@@ -30,7 +30,7 @@ class MahasiswaController extends Controller
         $tugasAkhir = $user->tugasAkhir;
 
         if (!$tugasAkhir || $tugasAkhir->status !== 'diajukan') {
-            return redirect()->route('dashboard')->with('error', 'Tidak dapat menambah Bimbingan baru. Silakan hubungi admin.');
+            return redirect()->route('dashboard')->with('error', 'Tidak dapat menambah bimbingan baru. Silahkan hubungi admin.');
         }
 
         return view('mahasiswa.create', [
