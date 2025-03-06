@@ -28,7 +28,7 @@ class Bimbingan extends Model
 
     public function tanggal()
     {
-        return Carbon::parse($this->tanggal_bimbingan)->translatedFormat('j, F Y');
+        return Carbon::parse($this->tanggal_bimbingan)->translatedFormat('j F Y');
     }
 
     public function mahasiswa()
