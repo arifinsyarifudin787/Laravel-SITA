@@ -23,14 +23,18 @@
                 Judul TA: <b><i>{{ $mahasiswa->tugasAkhir->judul ?? '-' }}</i></b>
                 
                 @php
-                    $persetujuanTA = optional($mahasiswa->tugasAkhir)->persetujuans->first();
+                    $persetujuanTA = optional($mahasiswa->tugasAkhir)->persetujuans->where('dosen_id', auth()->user()->id)->first();
                 @endphp
 
                 <div class="status-container">
                     <b class="{{ $persetujuanTA->status === 'disetujui' ? 'text-green-600' : 'text-red-600' }}">
                         Status: {{ $persetujuanTA->status }}
                     </b>
-                    @if ($mahasiswa->bimbingans->count() > 7 && $persetujuanTA->status === 'diajukan')
+                    @php
+                        $status = $mahasiswa->bimbingans->flatMap->persetujuans->where('dosen_id', auth()->user()->id)->pluck('status');
+                        $isNotDiajukan= $status->every(fn($status) => $status !== 'diajukan')
+                    @endphp
+                    @if ($mahasiswa->bimbingans->count() > 7 && $isNotDiajukan && $persetujuanTA->status === 'diajukan')
                     <form action="{{ route('persetujuan.ta') }}" method="POST">
                         @method('PUT')
                         @csrf
