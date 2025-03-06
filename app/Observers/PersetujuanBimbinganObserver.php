@@ -11,7 +11,13 @@ class PersetujuanBimbinganObserver
      */
     public function created(PersetujuanBimbingan $persetujuan): void
     {
-        //
+        $bimbingan = $persetujuan->bimbingan;
+        
+        $persetujuanList = $bimbingan->persetujuans->pluck('status');
+
+        if ($persetujuanList->contains('diajukan')) {
+            $bimbingan->update(['status' => 'diajukan']);
+        }
     }
 
     /**
