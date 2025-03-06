@@ -10,11 +10,17 @@ use App\Models\User;
 
 class DosenController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {   
+        $status = $request->input('status', 'dalam_proses');
         $mahasiswas = auth()->user()->mahasiswaBimbingans()
-            ->whereHas('tugasAkhir', function ($query) {
-                $query->where('status', '!=', 'selesai');
+            ->whereHas('tugasAkhir', function ($query) use ($status) {
+                if ($status === 'dalam_proses') {
+                    $query->where('status', '!=', 'selesai');
+                }
+                else {
+                    $query->where('status', 'selesai');
+                }
             })
             ->with(['bimbingans' => function ($query) {
                 $query->latest();
@@ -24,6 +30,7 @@ class DosenController extends Controller
         return view('dosen.index', [
             'title' => 'Dashboard',
             'mahasiswas' => $mahasiswas,
+            'status' => $status
         ]);
     }
 
