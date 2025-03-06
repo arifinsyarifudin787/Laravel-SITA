@@ -13,6 +13,9 @@ class DosenController extends Controller
     public function index()
     {   
         $mahasiswas = auth()->user()->mahasiswaBimbingans()
+            ->whereHas('tugasAkhir', function ($query) {
+                $query->where('status', '!=', 'selesai');
+            })
             ->with(['bimbingans' => function ($query) {
                 $query->latest();
             }])
