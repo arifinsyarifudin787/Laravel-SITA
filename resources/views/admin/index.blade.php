@@ -93,6 +93,11 @@
                 @endforelse
             </tbody>
         </table>
+        @if ($tugas_akhirs)
+        <div class="pagination">
+            {{ $tugas_akhirs->links() }}
+        </div>
+        @endif
     </div>
 </div>
 @endsection

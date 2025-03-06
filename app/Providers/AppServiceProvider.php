@@ -10,6 +10,7 @@ use App\Observers\PersetujuanBimbinganObserver;
 use App\Observers\PersetujuanTugasAkhirObserver;
 use App\Observers\TugasAkhirObserver;
 use Carbon\Carbon;
+use Illuminate\Pagination\Paginator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -27,6 +28,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Carbon::setLocale('id');
+        Paginator::useBootstrap();
         PersetujuanBimbingan::observe(PersetujuanBimbinganObserver::class);
         PersetujuanTA::observe(PersetujuanTugasAkhirObserver::class);
         TugasAkhir::observe(TugasAkhirObserver::class);
