@@ -35,7 +35,7 @@
 
                 <div class="justify-between">
                     <div>
-                        <form action="{{ route('dashboard') }}" method="GET" class="mb-4">
+                        <form action="{{ route('dashboard') }}" method="GET">
                             <label for="status" class="text-gray-700 font-medium">Filter Status:</label>
                             <select name="status" id="status" class="filter" onchange="this.form.submit()">
                                 <option value="diajukan" {{ $status == 'diajukan' ? 'selected' : '' }}>Diajukan</option>
