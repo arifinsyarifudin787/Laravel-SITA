@@ -66,7 +66,7 @@
                         <td>
                             @php
                                 $totalBimbingan = optional($ta->mahasiswa)->bimbingans->sum(fn($bimbingan) => $bimbingan->persetujuans->count()) ?? 0;
-                                $progress = $totalBimbingan > 0 ? ($totalBimbingan / 16 * 100) : 0;
+                                $progress = min(100, $totalBimbingan > 0 ? ($totalBimbingan / 16 * 100) : 0);
                             @endphp
                             {{ number_format($progress, 1) }}%
                         </td>
