@@ -36,7 +36,7 @@ Route::middleware('auth')->group(function () {
 
         return match ($user->role) {
             'mahasiswa' => app(MahasiswaController::class)->index(),
-            'dosen' => app(DosenController::class)->index(),
+            'dosen' => app(DosenController::class)->index(request()),
             'admin' => app(AdminController::class)->index(request()),
             default => abort(403),
         };
