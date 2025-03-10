@@ -51,6 +51,7 @@ class MahasiswaController extends Controller
 
         $bimbingan = Bimbingan::where([
             'tanggal_bimbingan' => $validatedData['tanggal_bimbingan'],
+            'mhs_id' => $validatedData['mhs_id'],
             'deskripsi' => $validatedData['deskripsi'],
         ])->first();
 
