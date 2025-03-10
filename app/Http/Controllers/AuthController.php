@@ -75,7 +75,7 @@ class AuthController extends Controller
                         'password' => bcrypt('default')
                     ]);
                 }
-                if ($user->role === 'mahasiswa') {
+                else if ($user->role === 'mahasiswa') {
                     $user->update(['name' => ucwords(strtolower($data['first_name']))]);
                 }
 

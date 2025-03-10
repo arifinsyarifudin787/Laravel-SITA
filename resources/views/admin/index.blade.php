@@ -65,8 +65,15 @@
                         <td>{{ optional($ta->mahasiswa)->name ?? '-' }}</td>
                         <td>
                             @php
-                                $totalBimbingan = optional($ta->mahasiswa)->bimbingans->sum(fn($bimbingan) => $bimbingan->persetujuans->count()) ?? 0;
-                                $progress = min(100, $totalBimbingan > 0 ? ($totalBimbingan / 16 * 100) : 0);
+                                $totalBimbingan = 0;
+                                foreach ($ta->mahasiswa->pembimbings as $p) {
+                                    $bimbingans = optional($ta->mahasiswa)->bimbingans->sum(
+                                        fn($bimbingan) => $bimbingan->persetujuans->where('dosen_id', $p->id)->count()
+                                    );
+                                    $bimbingans = $bimbingans > 8 ? 8 : $bimbingans;
+                                    $totalBimbingan += $bimbingans;
+                                }
+                                $progress = $totalBimbingan / 16 * 100;
                             @endphp
                             {{ number_format($progress, 1) }}%
                         </td>

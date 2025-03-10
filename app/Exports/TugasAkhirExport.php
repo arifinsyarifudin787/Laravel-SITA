@@ -20,12 +20,20 @@ class TugasAkhirExport implements FromCollection, WithHeadings
         $query = TugasAkhir::where('status', $this->status);
 
         return $query->get()->map(function ($ta) {
-            $totalBimbingan = $ta->mahasiswa->bimbingans->count();
+            $totalBimbingan = 0;
+            foreach ($ta->mahasiswa->pembimbings as $p) {
+                $bimbingans = optional($ta->mahasiswa)->bimbingans->sum(
+                    fn($bimbingan) => $bimbingan->persetujuans->where('dosen_id', $p->id)->count()
+                );
+                $bimbingans = $bimbingans > 8 ? 8 : $bimbingans;
+                $totalBimbingan += $bimbingans;
+            }
+            $progress = $totalBimbingan / 16 * 100;
             
             return [
                 'NIM' => $ta->nim,
                 'Nama Mahasiswa' => $ta->mahasiswa->name,
-                'Progress (%)' => round(min(100, $totalBimbingan > 0 ? ($totalBimbingan / 16 * 100) : 0), 2) . '%',
+                'Progress (%)' => $progress . '%',
             ];
         });
     }
