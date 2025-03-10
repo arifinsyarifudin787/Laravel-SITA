@@ -11,7 +11,15 @@ function toggleSidebar() {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
+    const alertBox = document.getElementById("alertBox");
+
     document.getElementById("closeAlert")?.addEventListener("click", function() {
-        document.getElementById("alertBox").remove();
+        alertBox.remove();
     });
+
+    if (alertBox) {
+        setTimeout(function() {
+            alertBox.remove();
+        }, 2000); 
+    }
 });
