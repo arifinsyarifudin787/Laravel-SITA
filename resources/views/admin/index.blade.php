@@ -84,10 +84,10 @@
                                 <a href="{{ route('ta.edit', $ta->id) }}" class="bttn btn-edit">Edit</a>
                                 @endif
                                 @if ($ta->status === 'disetujui')
-                                <form action="{{ route('ta.destroy', $ta->id) }}" method="POST">
+                                <form id="archive-ta-{{ $ta->id }}" action="{{ route('ta.destroy', $ta->id) }}" method="POST">
                                     @method('DELETE')
                                     @csrf
-                                    <button type="submit" class="bttn btn-archive">Arsipkan</button>
+                                    <button type="button" class="bttn btn-archive" onclick="confirmArchive(`archive-ta-{{ $ta->id }}`)">Arsipkan</button>
                                 </form>
                                 @endif
                             </div>

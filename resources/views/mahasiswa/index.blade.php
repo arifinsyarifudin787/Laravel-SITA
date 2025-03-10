@@ -50,10 +50,10 @@
                                 </td>
                                 <td class="border px-4 py-2 text-center">
                                     @if ($bimbingan->persetujuans->every(fn($p) => $p->status === 'diajukan'))
-                                    <form action="{{ route('bimbingan.destroy', $bimbingan->id) }}" method="POST">
+                                    <form id="delete-bimbingan-{{ $bimbingan->id }}" action="{{ route('bimbingan.destroy', $bimbingan->id) }}" method="POST">
                                         @method('DELETE')
                                         @csrf
-                                        <button type="submit" class="btn btn-red">Hapus</button>
+                                        <button type="button" class="btn btn-red" onclick="confirmDelete(`delete-bimbingan-{{ $bimbingan->id }}`)">Hapus</button>
                                     </form>
                                     @else
                                         -

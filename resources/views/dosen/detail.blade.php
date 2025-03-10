@@ -35,12 +35,13 @@
                         $isNotDiajukan= $status->every(fn($status) => $status !== 'diajukan')
                     @endphp
                     @if ($mahasiswa->bimbingans->count() > 7 && $isNotDiajukan && $persetujuanTA->status === 'diajukan')
-                    <form action="{{ route('persetujuan.ta') }}" method="POST">
+                    <form id="ta-accept" action="{{ route('persetujuan.ta') }}" method="POST">
                         @method('PUT')
                         @csrf
                         <input name="type" value="tugas_akhir" hidden>
                         <input name="tugas_akhir" value="{{ $mahasiswa->tugasAkhir->id }}" hidden>
-                        <button type="submit" name="status" value="disetujui" class="btn btn-green">Setujui Tugas Akhir</button>
+                        <input type="hidden" name="status" value="disetujui">
+                        <button type="button" class="btn btn-green" onclick="confirmAccept('ta-accept')">Setujui Tugas Akhir</button>
                     </form>
                     @endif
                 <div>
@@ -68,13 +69,22 @@
                                     {{ $persetujuan->status }}
                                 </b>
                             @else
-                                <form action="{{ route('persetujuan.bimbingan') }}" method="POST">
+                                <form id="bimbingan-{{ $bimbingan->id }}" action="{{ route('persetujuan.bimbingan') }}" method="POST">
                                     @method('PUT')
                                     @csrf
                                     <input name="type" value="bimbingan" hidden>
                                     <input name="bimbingan" value="{{ $bimbingan->id }}" hidden>
-                                    <button type="submit" name="status" value="disetujui" class="btn btn-green">Setujui</button>
-                                    <button type="submit" name="status" value="ditolak" class="btn btn-red">Tolak</button>
+                                    <input type="hidden" name="status" id="status-input-bimbingan-{{ $bimbingan->id }}" value="">
+
+                                    <button type="button" class="btn btn-green" 
+                                            onclick="confirmAccept('disetujui', 'bimbingan-{{ $bimbingan->id }}')">
+                                        Setujui
+                                    </button>
+
+                                    <button type="button" class="btn btn-red"
+                                            onclick="confirmDecline('ditolak', 'bimbingan-{{ $bimbingan->id }}')">
+                                        Tolak
+                                    </button>
                                 </form>
                             @endif
                         </td>
