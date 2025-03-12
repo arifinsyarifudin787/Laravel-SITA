@@ -51,6 +51,7 @@ Route::middleware('auth')->group(function () {
     Route::middleware(['role:admin'])->group(function () {
         Route::get('/tugas-akhir/tambah', [AdminController::class, 'createTA'])->name('ta.create');
         Route::get('/tugas-akhir/export', [AdminController::class, 'exportTA'])->name('ta.export');
+        Route::get('/tugas-akhir/search', [AdminController::class, 'searchTA'])->name('ta.search');
         Route::get('/tugas-akhir/{ta:id}', [AdminController::class, 'showTA'])->name('ta.show');
         Route::get('/tugas-akhir/edit/{ta:id}', [AdminController::class, 'editTA'])->name('ta.edit');
         Route::post('/tugas-akhir', [AdminController::class, 'storeTA'])->name('ta.store');

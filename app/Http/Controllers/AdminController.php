@@ -140,6 +140,25 @@ class AdminController extends Controller
             'pembimbing2' => $pembimbing2,
         ]);
     }
+    
+    public function searchTA(Request $request) 
+    {
+        $keyword = $request['nama'];
+
+        $ta = TugasAkhir::with('mahasiswa')
+            ->when($keyword, function ($query) use ($keyword) {
+                $query->whereHas('mahasiswa', function ($q) use ($keyword) {
+                    $q->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($keyword) . '%']);
+                });
+            })
+            ->paginate(15);
+        
+        return view('admin.search', [
+            'title' => 'Pencarian',
+            'tugas_akhirs' => $ta,
+            'nama' => $keyword
+        ]);
+    }
 
     public function updateTA(TugasAkhir $ta, Request $request)
     {
