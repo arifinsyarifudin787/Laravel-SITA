@@ -27,11 +27,12 @@ class DosenController extends Controller
             }])
             ->get();
 
-        return view('dosen.index', [
-            'title' => 'Dashboard',
-            'mahasiswas' => $mahasiswas,
-            'status' => $status
-        ]);
+            return view('dosen.index', [
+                'title' => 'Dashboard',
+                'mahasiswas' => $mahasiswas,
+                'dosen_id' => auth()->user()->id,
+                'status' => $status
+            ]);
     }
 
     public function show(User $mhs)
