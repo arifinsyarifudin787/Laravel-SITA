@@ -310,6 +310,7 @@ header {
         width: 100%;
         font-size: 0.7rem;
         padding-left: 10px;
+        height: auto;
     }
 }
 
@@ -811,7 +812,7 @@ footer {
 .header-container {
     display: flex;
     align-items: center;
-    height: 70px; 
+    height: 60px; 
 }
 
 /* Title (H1) */
@@ -819,7 +820,7 @@ footer {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    margin: 0;
+    margin: auto;
     font-size: 24px;
     color: #333;
 }

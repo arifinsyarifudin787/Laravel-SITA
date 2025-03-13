@@ -41,7 +41,7 @@
                         <input name="type" value="tugas_akhir" hidden>
                         <input name="tugas_akhir" value="{{ $mahasiswa->tugasAkhir->id }}" hidden>
                         <input type="hidden" name="status" value="disetujui">
-                        <button type="button" class="btn btn-green" onclick="confirmAccept('ta-accept')">Setujui Tugas Akhir</button>
+                        <button type="button" class="btn btn-green" onclick="confirmAcceptTA('ta-accept')">Setujui Tugas Akhir</button>
                     </form>
                     @endif
                 <div>

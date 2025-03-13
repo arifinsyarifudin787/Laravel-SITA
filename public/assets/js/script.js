@@ -71,6 +71,21 @@ function confirmDecline(status, id) {
         }
     });}
 
+    function confirmAcceptTA(id) {
+        Swal.fire({
+            title: 'Apakah Anda yakin?',
+            text: "tugas akhir yang disetujui tidak bisa diubah!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Ya, setujui saja!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById(id).submit();
+            }
+        });}
+
     document.addEventListener("DOMContentLoaded", function() {
         const alertBox = document.getElementById("alertBox");
     
