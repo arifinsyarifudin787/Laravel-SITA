@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Bimbingan;
 use App\Models\PersetujuanBimbingan;
 use App\Models\PersetujuanTA;
+use App\Models\PembimbingTA;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class MahasiswaController extends Controller
 {
@@ -92,5 +94,28 @@ class MahasiswaController extends Controller
         Bimbingan::destroy($b->id);
 
         return redirect('dashboard')->with('success', 'Bimbingan berhasil dihapus.');
+    }
+
+    public function export()
+    {
+        $mahasiswa = auth()->user();
+        $ta = $mahasiswa->tugasAkhir;
+        
+        $pembimbing1 = PembimbingTA::where(['peran' => 'pembimbing_1', 'mhs_id' => $mahasiswa->id])->first()->dosen->name;
+        $pembimbing2 = PembimbingTA::where(['peran' => 'pembimbing_2', 'mhs_id' => $mahasiswa->id])->first()->dosen->name;
+        
+        $pdf = Pdf::setOptions(['isHTML5ParserEnabled' => true, 'isRemoteEnabled' => true]);
+        
+        $pdf->loadView('mahasiswa.export', [
+            'mahasiswa' => $mahasiswa,
+            'tugas_akhir' => $ta,
+            'pembimbing1' => $pembimbing1,
+            'pembimbing2' => $pembimbing2,
+            'bimbingan' => $mahasiswa->bimbingans
+        ]);
+
+        $pdf->setPaper('A4');
+    
+        return $pdf->download('Lembar_Bimbingan_' . $ta->nim . '.pdf');
     }
 }
