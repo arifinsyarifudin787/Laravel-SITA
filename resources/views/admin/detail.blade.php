@@ -28,12 +28,12 @@
             <tbody>
                 @forelse ($mahasiswa->bimbingans as $bimbingan)
                 <tr>
-                    <td class="index">{{ $loop->iteration }}</td> 
-                    <td>{{ $bimbingan->tanggal() }}</td>
-                    <td>{{ $bimbingan->materi }}</td>
-                    <td>{{ $bimbingan->persetujuanPembimbing1 ? $bimbingan->persetujuanPembimbing1->status : '-' }}</td>
-                    <td>{{ $bimbingan->persetujuanPembimbing2 ? $bimbingan->persetujuanPembimbing2->status : '-' }}</td>
-                    <td>
+                    <td class="text-center">{{ $loop->iteration }}</td> 
+                    <td class="text-center">{{ $bimbingan->tanggal() }}</td>
+                    <td class="justify-text">{{ $bimbingan->materi }}</td>
+                    <td class="text-center">{{ $bimbingan->persetujuanPembimbing1 ? $bimbingan->persetujuanPembimbing1->status : '-' }}</td>
+                    <td class="text-center">{{ $bimbingan->persetujuanPembimbing2 ? $bimbingan->persetujuanPembimbing2->status : '-' }}</td>
+                    <td class="text-center">
                         <b class="{{ $bimbingan->status === 'disetujui' ? 'text-green-600' : ($bimbingan->status === 'ditolak' ? 'text-red-600' : '')}}">
                             {{ $bimbingan->status }}
                         </b>

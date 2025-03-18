@@ -30,9 +30,9 @@
             <tbody>
                 @forelse ($tugas_akhirs as $ta)
                     <tr>
-                        <td>{{ $ta->nim }}</td>
-                        <td>{{ optional($ta->mahasiswa)->name ?? '-' }}</td>
-                        <td>
+                        <td class="text-center">{{ $ta->nim }}</td>
+                        <td class="text-center">{{ optional($ta->mahasiswa)->name ?? '-' }}</td>
+                        <td class="text-center">
                             @php
                                 $totalBimbingan = 0;
                                 foreach ($ta->mahasiswa->pembimbings as $p) {
@@ -46,7 +46,7 @@
                             @endphp
                             {{ number_format($progress, 1) }}%
                         </td>
-                        <td>{{ $ta->status }}</td>
+                        <td class="text-center">{{ $ta->status }}</td>
                         <td>
                             <div class="action-buttons">
                                 <a href="{{ route('ta.show', $ta->id) }}" class="bttn btn-detail">Detail</a>

@@ -337,14 +337,13 @@ header {
     padding: 12px;
     font-size: 14px;
     color: #333;
-    text-align: justify;
     border: 1px solid #ddd;
 }
 .table-auto th {
     text-align: center;
 }
 
-.index {
+.text-center {
     text-align: center;
 }
 
