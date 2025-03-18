@@ -43,8 +43,11 @@ Route::middleware('auth')->group(function () {
     })->name('dashboard');
     
     Route::middleware(['role:dosen'])->group(function () {
-        Route::get('/mahasiswa/{mhs:id}', [DosenController::class, 'show']);
+        Route::get('/mahasiswa/{mhs:id}', [DosenController::class, 'show'])->name('bimbingan.mahasiswa');
         Route::put('/bimbingan/persetujuan', [DosenController::class, 'update'])->name('persetujuan.bimbingan');
+        Route::get('/bimbingan/persetujuan/{p:id}', [DosenController::class, 'editPersetujuan'])->name('persetujuan.edit');
+        Route::get('/bimbingan/{b:id}', [DosenController::class, 'editBimbingan'])->name('bimbingan.edit');
+        Route::put('/bimbingan', [DosenController::class, 'updateBimbingan'])->name('bimbingan.update');
         Route::put('/tugas-akhir/persetujuan', [DosenController::class, 'update'])->name('persetujuan.ta');
     });
 
