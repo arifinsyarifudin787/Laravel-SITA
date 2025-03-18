@@ -337,8 +337,15 @@ header {
     padding: 12px;
     font-size: 14px;
     color: #333;
-    text-align: center;
+    text-align: justify;
     border: 1px solid #ddd;
+}
+.table-auto th {
+    text-align: center;
+}
+
+.index {
+    text-align: center;
 }
 
 /* Hover effect */
@@ -408,6 +415,7 @@ header {
 
 .btn-detail {
     background-color: #3b82f6;
+    color: white;
 }
 
 .btn-detail:hover {
@@ -417,6 +425,7 @@ header {
 
 .btn-edit {
     background-color: #10b981;
+    color: white;
 }
 
 .btn-edit:hover {
@@ -771,6 +780,10 @@ footer {
 .pagination .active span {
     background-color: #ffd801;
     font-weight: bold;
+}
+
+.justify-text {
+    text-align: justify;
 }
 
 /* Responsive Styles */
