@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Bimbingan;
 use App\Models\PersetujuanBimbingan;
 use App\Models\PersetujuanTA;
 use App\Models\User;
@@ -53,6 +54,31 @@ class DosenController extends Controller
             'dosenId' => $dosenId
         ]);
     }
+    
+    public function editBimbingan(Bimbingan $b)
+    {
+        return view('dosen.edit_bimbingan', [
+            'title' => 'Edit Bimbingan',
+            'bimbingan' => $b
+        ]);
+    }
+    
+    public function editPersetujuan(PersetujuanBimbingan $p)
+    {
+        return view('dosen.edit_persetujuan', [
+            'title' => 'Tambah Saran',
+            'persetujuan' => $p,
+        ]);
+    }
+
+    public function updateBimbingan(Request $request)
+    {
+        $bimbingan = Bimbingan::where('id', $request->bimbingan)->first();
+        
+        $bimbingan->update(['materi' => $request->materi]);
+
+        return redirect()->route('bimbingan.mahasiswa', $bimbingan->mhs_id)->with('success', 'Materi bimbingan berhasil diperbaharui.');
+    }
 
     public function update(Request $request)
     {
@@ -72,6 +98,11 @@ class DosenController extends Controller
             $persetujuan->update(['status' => $request->status]);
 
             return back()->with('success', 'Status tugas akhir berhasil diperbaharui.');
+        } else {
+            $persetujuan = PersetujuanBimbingan::where('id', $request->persetujuan)->first();
+            $persetujuan->update(['saran' => $request->saran]);
+            
+            return redirect()->route('bimbingan.mahasiswa', $persetujuan->bimbingan->mhs_id)->with('success', 'Saran bimbingan berhasil ditambahkan.');
         }
     
         return back()->with('error', 'Data tidak ditemukan.');
