@@ -25,6 +25,7 @@ class AdminController extends Controller
 
         $tugas_akhirs = TugasAkhir::with(['mahasiswa.bimbingans.persetujuans'])
             ->when($status, fn($query) => $query->where('status', $status))
+            ->orderBy('nim', 'asc')
             ->paginate(15);
         
         return view('admin.index', [

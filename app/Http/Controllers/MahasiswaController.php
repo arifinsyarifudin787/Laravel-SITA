@@ -46,7 +46,7 @@ class MahasiswaController extends Controller
 
         $validatedData = $request->validate([
     		'tanggal_bimbingan' => ['required'],
-            'deskripsi' => ['required'],
+            'materi' => ['required'],
     	]);
         
     	$validatedData['mhs_id'] = $mhs->id;
@@ -64,7 +64,7 @@ class MahasiswaController extends Controller
         $bimbingan = Bimbingan::where([
             'tanggal_bimbingan' => $validatedData['tanggal_bimbingan'],
             'mhs_id' => $validatedData['mhs_id'],
-            'deskripsi' => $validatedData['deskripsi'],
+            'materi' => $validatedData['materi'],
         ])->first();
 
         if (!$bimbingan) {

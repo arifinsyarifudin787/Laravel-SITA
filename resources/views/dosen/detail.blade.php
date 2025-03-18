@@ -50,8 +50,10 @@
                 <tr class="bg-gray-200">
                     <th class="border border-gray-400 px-4 py-2">No</th>
                     <th class="border border-gray-400 px-4 py-2">Tanggal Bimbingan</th>
-                    <th class="border border-gray-400 px-4 py-2">Deskripsi</th>
+                    <th class="border border-gray-400 px-4 py-2">Materi</th>
+                    <th class="border border-gray-400 px-4 py-2">Saran</th>
                     <th class="border border-gray-400 px-4 py-2">Status</th>
+                    <th class="border border-gray-400 px-4 py-2">Aksi</th>
                 </tr>
             </thead>
             <tbody>
@@ -62,7 +64,8 @@
                     <tr>
                         <td class="border border-gray-400 px-4 py-2 text-center">{{ $loop->iteration }}</td>
                         <td class="border border-gray-400 px-4 py-2 text-center">{{ $bimbingan->tanggal() }}</td>
-                        <td class="border border-gray-400 px-4 py-2 text-center">{{ $bimbingan->deskripsi }}</td>
+                        <td class="border border-gray-400 px-4 py-2 justify-text">{{ $bimbingan->materi }}</td>
+                        <td class="border border-gray-400 px-4 py-2 justify-text">{{ optional($persetujuan)->saran }}</td>
                         <td class="border border-gray-400 px-4 py-2 text-center">
                             @if ($persetujuan && $persetujuan->status !== 'diajukan')
                                 <b class="{{ $persetujuan->status === 'disetujui' ? 'text-green-600' : 'text-red-600' }}">
@@ -88,10 +91,14 @@
                                 </form>
                             @endif
                         </td>
+                        <td class="border border-gray-400 px-4 py-2 text-center">
+                            <button class="btn btn-edit" onclick="window.location.href='{{ route('bimbingan.edit', $bimbingan->id) }}'">Edit</button>
+                            <button class="btn btn-detail" onclick="window.location.href='{{ route('persetujuan.edit', $persetujuan->id) }}'">Saran</button>
+                        </td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="4" class="border border-gray-400 px-4 py-2 text-center text-gray-500">
+                        <td colspan="6" class="border border-gray-400 px-4 py-2 text-center text-gray-500">
                             Belum ada bimbingan.
                         </td>
                     </tr>

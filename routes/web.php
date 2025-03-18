@@ -43,8 +43,10 @@ Route::middleware('auth')->group(function () {
     })->name('dashboard');
     
     Route::middleware(['role:dosen'])->group(function () {
-        Route::get('/mahasiswa/{mhs:id}', [DosenController::class, 'show']);
+        Route::get('/mahasiswa/{mhs:id}', [DosenController::class, 'show'])->name('bimbingan.mahasiswa');
         Route::put('/bimbingan/persetujuan', [DosenController::class, 'update'])->name('persetujuan.bimbingan');
+        Route::get('/bimbingan/persetujuan/{p:id}', [DosenController::class, 'editPersetujuan'])->name('persetujuan.edit');
+        Route::put('/bimbingan', [DosenController::class, 'updateBimbingan'])->name('bimbingan.update');
         Route::put('/tugas-akhir/persetujuan', [DosenController::class, 'update'])->name('persetujuan.ta');
     });
 
@@ -67,9 +69,11 @@ Route::middleware('auth')->group(function () {
     
     Route::middleware(['role:mahasiswa'])->group(function () {
         Route::get('/bimbingan/tambah', [MahasiswaController::class, 'create'])->name('bimbingan.create');
+        Route::get('/bimbingan/export', [MahasiswaController::class, 'export'])->name('bimbingan.export');
         Route::post('/bimbingan', [MahasiswaController::class, 'store'])->name('bimbingan.store');
         Route::delete('/bimbingan/{b:id}', [MahasiswaController::class, 'destroy'])->name('bimbingan.destroy');
     });
+    Route::get('/bimbingan/{b:id}', [DosenController::class, 'editBimbingan'])->name('bimbingan.edit');
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });

@@ -22,6 +22,7 @@ class CreatePersetujuanBimbingansTable extends Migration
                   ->constrained('users')
                   ->nullOnDelete();
             $table->enum('status', ['diajukan', 'disetujui', 'ditolak']);
+            $table->text('saran')->nullable();
             $table->timestamps();
         });
     }
