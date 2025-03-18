@@ -22,7 +22,7 @@
                         <tr>
                             <th class="border px-4 py-2">No</th>
                             <th class="border px-4 py-2">Tanggal Bimbingan</th>
-                            <th class="border px-4 py-2">Deskripsi</th>
+                            <th class="border px-4 py-2">Materi</th>
                             <th class="border px-4 py-2">Dosen 1</th>
                             <th class="border px-4 py-2">Dosen 2</th>
                             <th class="border px-4 py-2">Status</th>
@@ -36,7 +36,7 @@
                                 <td class="border px-4 py-2 text-center">
                                     {{ $bimbingan->tanggal() ?? '-' }}
                                 </td>
-                                <td class="border px-4 py-2">{!! nl2br(e($bimbingan->deskripsi)) !!}</td>
+                                <td class="border px-4 py-2">{!! nl2br(e($bimbingan->materi)) !!}</td>
                                 <td class="border px-4 py-2 text-center">
                                     {{ optional($bimbingan->persetujuanPembimbing1)->status ?? '-' }}
                                 </td>

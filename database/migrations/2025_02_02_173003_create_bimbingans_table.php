@@ -19,7 +19,7 @@ class CreateBimbingansTable extends Migration
             $table->foreignUuid('mhs_id')
                   ->constrained('users')
                   ->cascadeOnDelete();
-            $table->text('deskripsi');
+            $table->text('materi');
             $table->enum('status', ['diajukan', 'disetujui', 'ditolak']);
             $table->timestamps();
         });

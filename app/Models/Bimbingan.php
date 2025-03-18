@@ -18,7 +18,7 @@ class Bimbingan extends Model
     protected $fillable = [
         'tanggal_bimbingan',
         'mhs_id',
-        'deskripsi',
+        'materi',
         'status'
     ];
 

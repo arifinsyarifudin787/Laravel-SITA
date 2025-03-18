@@ -50,7 +50,7 @@
                 <tr class="bg-gray-200">
                     <th class="border border-gray-400 px-4 py-2">No</th>
                     <th class="border border-gray-400 px-4 py-2">Tanggal Bimbingan</th>
-                    <th class="border border-gray-400 px-4 py-2">Deskripsi</th>
+                    <th class="border border-gray-400 px-4 py-2">Materi</th>
                     <th class="border border-gray-400 px-4 py-2">Status</th>
                 </tr>
             </thead>
@@ -62,7 +62,7 @@
                     <tr>
                         <td class="border border-gray-400 px-4 py-2 text-center">{{ $loop->iteration }}</td>
                         <td class="border border-gray-400 px-4 py-2 text-center">{{ $bimbingan->tanggal() }}</td>
-                        <td class="border border-gray-400 px-4 py-2 text-center">{{ $bimbingan->deskripsi }}</td>
+                        <td class="border border-gray-400 px-4 py-2 text-center">{{ $bimbingan->materi }}</td>
                         <td class="border border-gray-400 px-4 py-2 text-center">
                             @if ($persetujuan && $persetujuan->status !== 'diajukan')
                                 <b class="{{ $persetujuan->status === 'disetujui' ? 'text-green-600' : 'text-red-600' }}">

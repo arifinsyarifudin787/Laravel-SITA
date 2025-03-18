@@ -19,7 +19,7 @@
                 <tr>
                     <th>No</th>
                     <th>Tanggal Bimbingan</th>
-                    <th>Deskripsi</th>
+                    <th>Materi</th>
                     <th>Dosen 1</th>
                     <th>Dosen 2</th>
                     <th>Status</th>
@@ -30,7 +30,7 @@
                 <tr>
                     <td>{{ $index + 1 }}</td> 
                     <td>{{ $bimbingan->tanggal() }}</td>
-                    <td>{{ $bimbingan->deskripsi }}</td>
+                    <td>{{ $bimbingan->materi }}</td>
                     <td>{{ $bimbingan->persetujuanPembimbing1 ? $bimbingan->persetujuanPembimbing1->status : '-' }}</td>
                     <td>{{ $bimbingan->persetujuanPembimbing2 ? $bimbingan->persetujuanPembimbing2->status : '-' }}</td>
                     <td>
