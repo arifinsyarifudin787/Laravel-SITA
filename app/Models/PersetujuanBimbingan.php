@@ -17,7 +17,8 @@ class PersetujuanBimbingan extends Model
     protected $fillable = [
         'bimbingan_id',
         'dosen_id',
-        'status'
+        'status',
+        'saran'
     ];
 
     public function bimbingan()
