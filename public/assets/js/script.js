@@ -44,7 +44,7 @@ function confirmAccept(status, id) {
     document.getElementById(`status-input-${id}`).value = status;
     Swal.fire({
         title: 'Apakah Anda yakin?',
-        text: "bimbingan yang disetujui tidak bisa diubah!",
+        text: "Bimbingan yang disetujui tidak bisa diubah!",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
@@ -59,7 +59,7 @@ function confirmDecline(status, id) {
     document.getElementById(`status-input-${id}`).value = status;
     Swal.fire({
         title: 'Apakah Anda yakin?',
-        text: "bimbingan yang ditolak tidak bisa diubah!",
+        text: "Bimbingan yang ditolak tidak bisa diubah!",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#d33',
@@ -74,7 +74,7 @@ function confirmDecline(status, id) {
     function confirmAcceptTA(id) {
         Swal.fire({
             title: 'Apakah Anda yakin?',
-            text: "tugas akhir yang disetujui tidak bisa diubah!",
+            text: "Tugas akhir yang disetujui tidak bisa diubah!",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -118,6 +118,3 @@ function confirmDecline(status, id) {
             setTimeout(() => element.remove(), 500);
         }
     });
-
-
-
