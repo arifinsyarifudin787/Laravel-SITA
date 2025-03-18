@@ -303,6 +303,21 @@ header {
     transition: left 0.3s ease, width 0.3s ease;
 }
 
+footer {
+    background-color: #000;
+    color: #fff;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding: 15px 0;
+    text-align: center;
+    font-size: 14px;
+    z-index: 999;
+    transition: left 0.3s ease, width 0.3s ease;
+}
+
+
+
 /* Header responsif */
 @media (max-width: 768px) {
     header {
@@ -338,6 +353,7 @@ header {
     font-size: 14px;
     color: #333;
     border: 1px solid #ddd;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 .table-auto th {
     text-align: center;
@@ -472,16 +488,6 @@ header {
 .logo-container {
     text-align: center;
     margin-bottom: 15px;
-}
-
-footer {
-    margin-top: auto;
-    width: 100%;
-    background-color: #000;
-    color: #fff;
-    text-align: center;
-    padding: 15px 0;
-    font-size: 14px;
 }
 
 /* Responsif untuk layar kecil */
@@ -822,7 +828,7 @@ footer {
 
 /* Header Container */
 .header-container {
-    display: flex;
+    display: flex; 
     align-items: center;
     height: 60px; 
 }
@@ -879,4 +885,3 @@ footer {
 .search-icon:hover i {
     color: #4CAF50;
 }
-
