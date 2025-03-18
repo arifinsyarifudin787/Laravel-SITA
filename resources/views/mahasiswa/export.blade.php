@@ -58,7 +58,7 @@
             <td style="white-space: pre;">{{ $tugas_akhir->nim }}                                    </td>
             <td style="max-width: 110">Tanggal SK</td>
             <td>:</td>
-            <td style="white-space: pre;">{{ $tugas_akhir->created_at->translatedFormat('j F Y') }}                           </td>
+            <td style="white-space: pre;">                           </td>
         </tr>
         <tr>
             <td>NAMA</td>

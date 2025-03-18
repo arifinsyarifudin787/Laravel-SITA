@@ -352,13 +352,14 @@ footer {
     padding: 12px;
     font-size: 14px;
     color: #333;
-    text-align: center;
     border: 1px solid #ddd;
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
+.table-auto th {
+    text-align: center;
+}
 
-
-.index {
+.text-center {
     text-align: center;
 }
 
@@ -884,4 +885,3 @@ footer {
 .search-icon:hover i {
     color: #4CAF50;
 }
-

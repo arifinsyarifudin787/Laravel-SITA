@@ -61,9 +61,9 @@
             <tbody>
                 @forelse ($tugas_akhirs as $ta)
                     <tr>
-                        <td>{{ $ta->nim }}</td>
-                        <td>{{ optional($ta->mahasiswa)->name ?? '-' }}</td>
-                        <td>
+                        <td class="text-center">{{ $ta->nim }}</td>
+                        <td class="text-center">{{ optional($ta->mahasiswa)->name ?? '-' }}</td>
+                        <td class="text-center">
                             @php
                                 $totalBimbingan = 0;
                                 foreach ($ta->mahasiswa->pembimbings as $p) {
