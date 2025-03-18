@@ -47,8 +47,8 @@ function confirmAccept(status, id) {
         text: "bimbingan yang disetujui tidak bisa diubah!",
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#d33',
-        cancelButtonColor: '#3085d6',
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
         confirmButtonText: 'Ya, setujui saja!'
     }).then((result) => {
         if (result.isConfirmed) {
@@ -77,8 +77,8 @@ function confirmDecline(status, id) {
             text: "tugas akhir yang disetujui tidak bisa diubah!",
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#3085d6',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
             confirmButtonText: 'Ya, setujui saja!'
         }).then((result) => {
             if (result.isConfirmed) {
