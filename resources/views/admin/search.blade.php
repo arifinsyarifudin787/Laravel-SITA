@@ -3,7 +3,7 @@
 @section('container')
 <div class="main-content">
     <div class="flex flex-col items-center justify-center">
-        <h2 class="mb-4 text-3xl font-bold">Dashboard</h2>
+        <h2 class="mb-4 text-3xl font-bold">Pencarian: {{ $nama }}</h2>
         <table class="table-auto">
             @if (session('error'))
             <div id="alertBox" class="alert-box error">
@@ -17,44 +17,13 @@
                 <button id="closeAlert">✖</button>
             </div>
             @endif
-            <div class="info-container">
-                <div class="card-container">
-                    <div class="card blue">
-                        <h3>On Going</h3>
-                        <p>{{ $countDiajukan }}</p>
-                    </div>
-                    <div class="card green">
-                        <h3>Siap Sidang</h3>
-                        <p>{{ $countDisetujui }}</p>
-                    </div>
-                    <div class="card gray">
-                        <h3>Selesai</h3>
-                        <p>{{ $countSelesai }}</p>
-                    </div>
-                </div>
-
-                <div class="justify-between">
-                    <div>
-                        <form action="{{ route('dashboard') }}" method="GET">
-                            <label for="status" class="text-gray-700 font-medium">Filter Status:</label>
-                            <select name="status" id="status" class="filter" onchange="this.form.submit()">
-                                <option value="diajukan" {{ $status == 'diajukan' ? 'selected' : '' }}>Diajukan</option>
-                                <option value="disetujui" {{ $status == 'disetujui' ? 'selected' : '' }}>Disetujui</option>
-                                <option value="selesai" {{ $status == 'selesai' ? 'selected' : '' }}>Selesai</option>
-                            </select>
-                        </form>
-                    </div>
-
-                    <a href="{{ route('ta.export', ['status' => $status]) }}" class="bttn btn-download">
-                        Unduh Laporan
-                    </a>
-                </div>
-            </div>
+            
             <thead>
                 <tr>
                     <th>NIM</th>
                     <th>Nama Mahasiswa</th>
                     <th>Progress</th>
+                    <th>Status</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
@@ -77,6 +46,7 @@
                             @endphp
                             {{ number_format($progress, 1) }}%
                         </td>
+                        <td>{{ $ta->status }}</td>
                         <td>
                             <div class="action-buttons">
                                 <a href="{{ route('ta.show', $ta->id) }}" class="bttn btn-detail">Detail</a>
@@ -95,7 +65,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="4" class="text-center">Belum ada Tugas Akhir</td>
+                        <td colspan="5" class="text-center">Belum ada Tugas Akhir</td>
                     </tr>
                 @endforelse
             </tbody>

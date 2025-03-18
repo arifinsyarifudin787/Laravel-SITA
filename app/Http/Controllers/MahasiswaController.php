@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Bimbingan;
 use App\Models\PersetujuanBimbingan;
+use App\Models\PersetujuanTA;
 
 class MahasiswaController extends Controller
 {
@@ -41,13 +42,24 @@ class MahasiswaController extends Controller
 
     public function store(Request $request)
     {
+        $mhs = auth()->user();
+
         $validatedData = $request->validate([
     		'tanggal_bimbingan' => ['required'],
             'deskripsi' => ['required'],
     	]);
         
-    	$validatedData['mhs_id'] = auth()->user()->id;
+    	$validatedData['mhs_id'] = $mhs->id;
     	$validatedData['status'] = 'diajukan';
+
+        $persetujuanTA = PersetujuanTA::where([
+            'dosen_id' => $request->dosen,
+            'tugas_akhir_id' => $mhs->tugasAkhir->id,
+        ])->first();
+
+        if ($persetujuanTA->status === 'disetujui') {
+            return back()->with('error', 'Tidak dapat menambah bimbingan dengan dosen ini.')->withInput();
+        }
 
         $bimbingan = Bimbingan::where([
             'tanggal_bimbingan' => $validatedData['tanggal_bimbingan'],

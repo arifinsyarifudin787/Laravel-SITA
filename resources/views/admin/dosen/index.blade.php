@@ -42,10 +42,10 @@
                         <td>
                             <div class="action-buttons">
                                 <a href="{{ route('dosen.edit', $dosen->id) }}" class="bttn btn-edit">Edit</a>
-                                <form action="{{ route('dosen.destroy', $dosen->id) }}" method="POST">
+                                <form id="delete-dosen-{{ $dosen->id }}" action="{{ route('dosen.destroy', $dosen->id) }}" method="POST">
                                     @method('DELETE')
                                     @csrf
-                                    <button type="submit" class="bttn btn-archive">Hapus</button>
+                                    <button type="button" class="bttn btn-archive" onclick="confirmDelete(`delete-dosen-{{ $dosen->id }}`)">Hapus</button>
                                 </form>
                             </div>
                         </td>

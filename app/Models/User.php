@@ -54,9 +54,14 @@ class User extends Authenticatable
         return $this->hasMany(Bimbingan::class, 'mhs_id');
     }
 
-    public function terakhirBimbingan()
+    public function terakhirBimbingan($id)
     {
-        return $this->bimbingans()->latest('tanggal_bimbingan')->first();
+        return Bimbingan::select('bimbingans.*')
+            ->join('persetujuan_bimbingans', 'bimbingans.id', '=', 'persetujuan_bimbingans.bimbingan_id')
+            ->where('bimbingans.mhs_id', $this->id)
+            ->where('persetujuan_bimbingans.dosen_id', $id)
+            ->orderByDesc('bimbingans.tanggal_bimbingan')
+            ->first();
     }
 
     public function mahasiswaBimbingans()
