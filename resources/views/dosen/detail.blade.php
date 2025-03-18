@@ -62,7 +62,7 @@
                         $persetujuan = $bimbingan->persetujuans->where('dosen_id', auth()->user()->id)->first();
                     @endphp
                     <tr>
-                        <td class="border border-gray-400 px-4 py-2 text-center">{{ $loop->iteration }}</td>
+                        <td class="border border-gray-400 px-4 py-2 index">{{ $loop->iteration }}</td>
                         <td class="border border-gray-400 px-4 py-2 text-center">{{ $bimbingan->tanggal() }}</td>
                         <td class="border border-gray-400 px-4 py-2 justify-text">{{ $bimbingan->materi }}</td>
                         <td class="border border-gray-400 px-4 py-2 justify-text">{{ optional($persetujuan)->saran }}</td>

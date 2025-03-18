@@ -30,7 +30,7 @@
                 $bimbinganTerakhir = $mahasiswa->terakhirBimbingan($dosen_id);
                 @endphp
                     <tr>
-                        <td class="border border-gray-400 px-4 py-2 text-center">{{ $loop->iteration }}</td>
+                        <td class="border border-gray-400 px-4 py-2 index">{{ $loop->iteration }}</td>
                         <td class="border border-gray-400 px-4 py-2">{{ $mahasiswa->name }}</td>
                         <td class="border border-gray-400 px-4 py-2">
                             {{ $bimbinganTerakhir ? $bimbinganTerakhir->tanggal() : '-' }}

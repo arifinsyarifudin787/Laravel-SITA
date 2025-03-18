@@ -7,11 +7,10 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\PembimbingTA;
 use App\Models\TugasAkhir;
-use App\Exports\TugasAkhirExport;
-use Maatwebsite\Excel\Facades\Excel;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Http;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class AdminController extends Controller
 {
@@ -212,9 +211,25 @@ class AdminController extends Controller
     public function exportTA(Request $request)
     {
         $status = $request->input('status');
+        
+        $tugas_akhirs = TugasAkhir::with(['mahasiswa.bimbingans.persetujuans'])
+            ->when($status, fn($query) => $query->where('status', $status))
+            ->orderBy('nim', 'asc')
+            ->get();
+
         $timestamp = Carbon::now()->format('Y-m-d_H-i-s');
         
-        return Excel::download(new TugasAkhirExport($status), "tugas_akhir_{$status}_{$timestamp}.xlsx");
+        $pdf = Pdf::setOptions(['isHTML5ParserEnabled' => true, 'isRemoteEnabled' => true]);
+        
+        $pdf->loadView('admin.export', [
+            'title' => 'Laporan Progress TA',
+            'tugas_akhirs' => $tugas_akhirs,
+            'status' => $status
+        ]);
+
+        $pdf->setPaper('A4');
+    
+        return $pdf->download('tugas_akhir_'.$status.'-'.$timestamp.'.pdf');
     }
 
     private function getDosens()

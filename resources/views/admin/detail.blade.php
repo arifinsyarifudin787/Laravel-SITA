@@ -26,9 +26,9 @@
                 </tr>
             </thead>
             <tbody>
-                @forelse ($mahasiswa->bimbingans as $index => $bimbingan)
+                @forelse ($mahasiswa->bimbingans as $bimbingan)
                 <tr>
-                    <td>{{ $index + 1 }}</td> 
+                    <td class="index">{{ $loop->iteration }}</td> 
                     <td>{{ $bimbingan->tanggal() }}</td>
                     <td>{{ $bimbingan->materi }}</td>
                     <td>{{ $bimbingan->persetujuanPembimbing1 ? $bimbingan->persetujuanPembimbing1->status : '-' }}</td>

@@ -35,7 +35,7 @@
             <tbody>
                 @forelse ($dosens as $dosen)
                     <tr>
-                        <td>{{ $loop->iteration }}</td>
+                        <td class="index">{{ $loop->iteration }}</td>
                         <td>{{ $dosen->username }}</td>
                         <td>{{ $dosen->name }}</td>
                         <td>{{ $dosen->asal_pt }}</td>

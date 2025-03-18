@@ -17,6 +17,12 @@
                     <button id="closeAlert">✖</button>
                 </div>
                 @endif
+                
+                @if (auth()->user()->tugasAkhir())
+                <a href="{{ route('bimbingan.export') }}" class="bttn btn-download">
+                    Unduh Laporan
+                </a>
+                @endif
                 <table class="table-auto w-full md:w-3/4 lg:w-2/3 border border-gray-300">
                     <thead class="bg-gray-200">
                         <tr>
@@ -31,17 +37,17 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($bimbingans as $index => $bimbingan)
+                        @forelse ($bimbingans as $bimbingan)
                             <tr class="border">
-                                <td class="border px-4 py-2 text-center">{{ $index + 1 }}</td>
+                                <td class="border px-4 py-2 index">{{ $loop->iteration }}</td>
                                 <td class="border px-4 py-2 text-center">
                                     {{ $bimbingan->tanggal() ?? '-' }}
                                 </td>
                                 <td class="border px-4 py-2">{!! nl2br(e($bimbingan->materi)) !!}</td>
                                 <td class="border px-4 py-2 text-center">
-                                    {{ optional($bimbingan->persetujuanPembimbing1)->saran}}
+                                    {{ optional($bimbingan->persetujuanPembimbing1)->saran }}
                                     <br>
-                                    {{ optional($bimbingan->persetujuanPembimbing2)->saran}}
+                                    {{ optional($bimbingan->persetujuanPembimbing2)->saran }}
                                 </td>
                                 <td class="border px-4 py-2 text-center">
                                     {{ optional($bimbingan->persetujuanPembimbing1)->status ?? '-' }}
